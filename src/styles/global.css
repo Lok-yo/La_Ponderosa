@@ -1,0 +1,277 @@
+/* =========================================
+   CARNICERÍA LA PONDEROSA 22 — GLOBAL CSS
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Outfit:wght@400;500;600;700&display=swap');
+
+/* ========== RESET ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* =========================================
+   PERFECTED SEMANTIC THEME TOKENS
+   ========================================= */
+
+/* DARK MODE (Default Steakhouse Obsidian & Ember) */
+:root,
+[data-theme="dark"] {
+  --color-bg-body: #120D0A;
+  --color-bg-surface: #1C1511;
+  --color-bg-muted: #271E18;
+  --color-bg-elevated: #322720;
+
+  --color-text-main: #FAF6EE;
+  --color-text-body: #E4DACD;
+  --color-text-soft: #B9ABA0;
+  --color-text-muted: #8B7F74;
+
+  --color-primary: #9E3838;
+  --color-primary-dark: #6C1E1E;
+  --color-primary-soft: #BA4B4B;
+
+  --color-accent: #D4AF37;
+  --color-accent-dark: #AA8822;
+
+  --color-border: #352B24;
+  --color-border-soft: #261E19;
+
+  --nav-bg: rgba(18, 13, 10, 0.96);
+  --nav-text: #FAF6EE;
+
+  --shadow-sm: 0 4px 15px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* LIGHT MODE (Warm Editorial Cream & Burgundy) */
+[data-theme="light"] {
+  --color-bg-body: #FBF8F2;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-muted: #F2EAD9;
+  --color-bg-elevated: #E8DFCF;
+
+  --color-text-main: #22160C;
+  --color-text-body: #36291E;
+  --color-text-soft: #6B5C4E;
+  --color-text-muted: #948575;
+
+  --color-primary: #722F2F;
+  --color-primary-dark: #4E1D1D;
+  --color-primary-soft: #9E4343;
+
+  --color-accent: #B8924B;
+  --color-accent-dark: #8E6F36;
+
+  --color-border: #E0D6C4;
+  --color-border-soft: #EDE6D8;
+
+  --nav-bg: rgba(251, 248, 242, 0.96);
+  --nav-text: #22160C;
+
+  --shadow-sm: 0 2px 8px rgba(34, 22, 12, 0.05);
+  --shadow-md: 0 8px 24px rgba(34, 22, 12, 0.08);
+  --shadow-lg: 0 20px 50px rgba(34, 22, 12, 0.12);
+}
+
+/* Base Body Styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-body);
+  background-color: var(--color-bg-body);
+  overflow-x: hidden;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-text-main);
+}
+
+/* ========== UTILITIES ========== */
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.container-narrow {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.container-wide {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.section {
+  padding: 5rem 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+}
+
+.eyebrow--gold {
+  color: var(--color-accent);
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-radius: 25px;
+  border: 1px solid transparent;
+  transition: all 220ms ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(114, 47, 47, 0.35);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-text-main);
+  border-color: var(--color-border);
+}
+
+.btn--outline:hover {
+  background: var(--color-bg-surface);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.btn--gold {
+  background: var(--color-accent);
+  color: #120D0A;
+  font-weight: 700;
+}
+
+.btn--gold:hover {
+  background: var(--color-accent-dark);
+  color: #120D0A;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 146, 75, 0.3);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-main);
+  border-color: var(--color-border);
+}
+
+.btn--ghost:hover {
+  background: var(--color-bg-muted);
+  color: var(--color-accent);
+}
+
+/* ========== SECTION HEADINGS ========== */
+.section-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 3.5rem;
+}
+
+.section-head h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 1rem;
+  color: var(--color-text-main);
+}
+
+.section-head p {
+  font-size: 1.1rem;
+  color: var(--color-text-soft);
+  line-height: 1.55;
+}
+
+/* ========== REVEAL ANIMATIONS ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1), transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.delay-1 { transition-delay: 100ms; }
+.reveal.delay-2 { transition-delay: 200ms; }
+.reveal.delay-3 { transition-delay: 300ms; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .section { padding: 3.5rem 0; }
+  .container, .container-narrow, .container-wide { padding: 0 1.25rem; }
+}

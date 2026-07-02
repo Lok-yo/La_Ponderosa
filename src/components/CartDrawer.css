@@ -1,0 +1,303 @@
+/* =========================================
+   CART DRAWER CSS
+   ========================================= */
+
+.cart-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 200ms ease-out;
+}
+
+.cart-drawer {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: var(--color-bg-body);
+  border-left: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+  animation: slideLeft 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--color-text-main);
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.cart-drawer__header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-bg-muted);
+}
+
+.cart-drawer__title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cart-drawer__icon {
+  color: var(--color-accent);
+}
+
+.cart-drawer__header h2 {
+  font-size: 1.15rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  margin: 0;
+  color: var(--color-text-main);
+}
+
+.cart-drawer__close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  padding: 0.4rem;
+  border-radius: 4px;
+  transition: all 220ms ease;
+}
+
+.cart-drawer__close:hover {
+  color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.cart-drawer__banner {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  color: #FFFFFF;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cart-drawer__banner svg {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.cart-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem;
+}
+
+.cart-drawer__empty {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.cart-drawer__empty svg {
+  margin: 0 auto 1rem;
+  opacity: 0.4;
+}
+
+.cart-drawer__empty p {
+  font-size: 1.1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--color-text-main);
+  margin-bottom: 0.5rem;
+}
+
+.cart-drawer__empty span {
+  font-size: 0.88rem;
+}
+
+.cart-drawer__list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-item {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 220ms ease;
+}
+
+.cart-item:hover {
+  border-color: var(--color-accent);
+}
+
+.cart-item__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.4rem;
+}
+
+.cart-item__title {
+  font-size: 1rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--color-text-main);
+  margin: 0;
+}
+
+.cart-item__remove {
+  color: var(--color-text-muted);
+  border: none;
+  background: transparent;
+  padding: 0.2rem;
+  border-radius: 4px;
+  transition: all 220ms ease;
+}
+
+.cart-item__remove:hover {
+  color: #E74C3C;
+}
+
+.cart-item__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item__prep-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: var(--color-bg-muted);
+  color: var(--color-accent);
+}
+
+.cart-item__meta {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+}
+
+.cart-item__notes {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--color-text-soft);
+  margin-bottom: 0.6rem;
+  background: var(--color-bg-body);
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+}
+
+.cart-item__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--color-border);
+}
+
+.cart-item__weight-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-bg-muted);
+  border-radius: 4px;
+  padding: 0.2rem;
+}
+
+.cart-item__weight-control button {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  color: var(--color-text-main);
+  transition: all 220ms ease;
+}
+
+.cart-item__weight-control button:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+}
+
+.cart-item__weight {
+  font-size: 0.88rem;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: center;
+  color: var(--color-text-main);
+}
+
+.cart-item__price {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--color-accent);
+}
+
+.cart-drawer__footer {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-bg-muted);
+  border-top: 1px solid var(--color-border);
+}
+
+.cart-drawer__summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
+  color: var(--color-text-main);
+}
+
+.cart-drawer__total {
+  font-size: 1.35rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--color-accent);
+}
+
+.cart-drawer__disclaimer {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.cart-drawer__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cart-drawer__btn-wa {
+  justify-content: center;
+  background: #25D366;
+  color: #FFFFFF;
+  font-size: 0.95rem;
+  padding: 0.9rem;
+}
+
+.cart-drawer__btn-wa:hover {
+  background: #1EBE57;
+}
+
+.cart-drawer__btn-clear {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  text-align: center;
+  text-decoration: underline;
+  padding: 0.3rem;
+}
+
+.cart-drawer__btn-clear:hover {
+  color: #E74C3C;
+}
