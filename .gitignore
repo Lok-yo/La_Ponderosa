@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Chrome Temporary Data
+.chrome-user-data
+chrome_out.log

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Icon } from '../components/Icons'
 import { cuts, categories } from '../data/cuts'
 import MeatAnatomyMap from '../components/MeatAnatomyMap'
@@ -58,6 +58,7 @@ const reviews = [
 
 export default function Home() {
   useReveal()
+  const navigate = useNavigate()
   const [selectedCutForModal, setSelectedCutForModal] = useState(null)
 
   return (
@@ -149,7 +150,7 @@ export default function Home() {
       {/* ============== MEAT ANATOMY MAP ============== */}
       <section className="anatomy-section section">
         <div className="container">
-          <MeatAnatomyMap onSelectCategory={() => {}} />
+          <MeatAnatomyMap onSelectCategory={(categoryId) => navigate('/cortes', { state: { categoryId } })} />
         </div>
       </section>
 

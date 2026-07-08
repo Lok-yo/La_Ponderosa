@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useCart } from '../context/CartContext'
 import { Icon } from './Icons'
 import './CutModal.css'
@@ -11,6 +11,15 @@ export default function CutModal({ cut, onClose }) {
   const [thickness, setThickness] = useState('1 pulgada')
   const [notes, setNotes] = useState('')
   const [addedSuccess, setAddedSuccess] = useState(false)
+
+  useEffect(() => {
+    if (cut) {
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [cut])
 
   if (!cut) return null
 

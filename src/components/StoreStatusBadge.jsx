@@ -9,8 +9,13 @@ export default function StoreStatusBadge() {
   useEffect(() => {
     const checkStatus = () => {
       const now = new Date()
-      // Local time check: store opens at 10 (10:00) and closes at 19 (19:00 / 7:00 PM)
-      const hours = now.getHours()
+      // SLRC / Sonora Timezone (America/Hermosillo)
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Hermosillo',
+        hour: 'numeric',
+        hour12: false
+      })
+      const hours = parseInt(formatter.format(now), 10)
       if (hours >= 10 && hours < 19) {
         setIsOpen(true)
         const closeHour = 19 - hours

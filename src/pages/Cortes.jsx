@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Breadcrumbs from '../components/Breadcrumbs'
 import { Icon } from '../components/Icons'
 import { cuts, categories, getCutsByCategory } from '../data/cuts'
@@ -9,11 +10,18 @@ import './Cortes.css'
 
 export default function Cortes() {
   const { addToCart } = useCart()
-  const [filter, setFilter] = useState('all')
+  const location = useLocation()
+  const [filter, setFilter] = useState(() => location.state?.categoryId || 'all')
   const [textureFilter, setTextureFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [selectedCutForModal, setSelectedCutForModal] = useState(null)
   const [addedCutId, setAddedCutId] = useState(null)
+
+  useEffect(() => {
+    if (location.state?.categoryId) {
+      setFilter(location.state.categoryId)
+    }
+  }, [location.state])
 
   useReveal([filter, textureFilter, search])
 

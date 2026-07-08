@@ -37,7 +37,7 @@ export default function Contacto() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    peopleCount: '8',
+    peopleCount: '5-8',
     message: ''
   })
 

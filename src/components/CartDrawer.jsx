@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useCart } from '../context/CartContext'
 import { Icon } from './Icons'
 import './CartDrawer.css'
@@ -14,6 +14,15 @@ export default function CartDrawer() {
     clearCart,
     generateWhatsAppUrl
   } = useCart()
+
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isCartOpen])
 
   if (!isCartOpen) return null
 

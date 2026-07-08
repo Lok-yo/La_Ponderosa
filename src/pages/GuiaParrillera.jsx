@@ -48,12 +48,16 @@ const DONENESS_LEVELS = [
 ]
 
 const CUT_PRESETS = [
-  { id: 'cabreria', name: 'Cabrería Sonorense', defaultThickness: '1 1/4 pulgada' },
-  { id: 'chuleton', name: 'Ribeye / Chuletón', defaultThickness: '1 pulgada' },
-  { id: 'tomahawk', name: 'Tomahawk Steak', defaultThickness: '2 pulgadas' },
-  { id: 'arrachera', name: 'Arrachera Marinada', defaultThickness: 'Delgado (1/2")' },
-  { id: 'solomillo', name: 'Solomillo / Filete', defaultThickness: '1 1/2 pulgada' }
+  { id: 'cabreria', name: 'Cabrería Sonorense', defaultThickness: '1 1/4 pulgada', timeMultiplier: 1.3 },
+  { id: 'chuleton', name: 'Ribeye / Chuletón', defaultThickness: '1 pulgada', timeMultiplier: 1.0 },
+  { id: 'tomahawk', name: 'Tomahawk Steak', defaultThickness: '2 pulgadas', timeMultiplier: 2.2, requiresIndirect: true },
+  { id: 'arrachera', name: 'Arrachera Marinada', defaultThickness: 'Delgado (1/2")', timeMultiplier: 0.5 },
+  { id: 'solomillo', name: 'Solomillo / Filete', defaultThickness: '1 1/2 pulgada', timeMultiplier: 1.2 }
 ]
+
+const getSuggestedTime = (cut, doneness) => {
+  return Math.round(doneness.timeSecondsPerSide * cut.timeMultiplier)
+}
 
 export default function GuiaParrillera() {
   useReveal()
@@ -62,16 +66,16 @@ export default function GuiaParrillera() {
   const [selectedDoneness, setSelectedDoneness] = useState(DONENESS_LEVELS[1])
 
   // Timer state
-  const [timeLeft, setTimeLeft] = useState(DONENESS_LEVELS[1].timeSecondsPerSide)
+  const [timeLeft, setTimeLeft] = useState(() => getSuggestedTime(CUT_PRESETS[0], DONENESS_LEVELS[1]))
   const [isRunning, setIsRunning] = useState(false)
   const [isDone, setIsDone] = useState(false)
 
-  // Update timer when doneness changes
+  // Update timer when doneness or cut changes
   useEffect(() => {
-    setTimeLeft(selectedDoneness.timeSecondsPerSide)
+    setTimeLeft(getSuggestedTime(selectedCut, selectedDoneness))
     setIsRunning(false)
     setIsDone(false)
-  }, [selectedDoneness])
+  }, [selectedDoneness, selectedCut])
 
   // Timer countdown effect
   useEffect(() => {
@@ -98,7 +102,7 @@ export default function GuiaParrillera() {
   const resetTimer = () => {
     setIsRunning(false)
     setIsDone(false)
-    setTimeLeft(selectedDoneness.timeSecondsPerSide)
+    setTimeLeft(getSuggestedTime(selectedCut, selectedDoneness))
   }
 
   const formatTime = (seconds) => {
@@ -197,6 +201,11 @@ export default function GuiaParrillera() {
                     ? 'Cocinando a la brasa...'
                     : 'Tiempo sugerido por lado'}
                 </span>
+                {selectedCut.requiresIndirect && (
+                  <div style={{ marginTop: '1rem', fontSize: '0.82rem', color: '#D4AF37', border: '1px dashed rgba(212, 175, 55, 0.4)', padding: '0.6rem 0.8rem', borderRadius: '6px', backgroundColor: 'rgba(212, 175, 55, 0.05)', textAlign: 'left', lineHeight: '1.4' }}>
+                    ⚠️ <strong>Corte muy grueso:</strong> Se aconseja cocción indirecta (Reverse Sear) primero, y usar el temporizador para el sellado final a fuego directo.
+                  </div>
+                )}
               </div>
 
               {/* Timer Controls */}

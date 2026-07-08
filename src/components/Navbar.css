@@ -13,12 +13,14 @@
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
   color: var(--nav-text);
+  --nav-height: 80px;
   transition: background-color 300ms ease, padding 300ms ease, border-color 300ms ease;
 }
 
 .nav--scrolled {
   box-shadow: var(--shadow-sm);
   border-bottom-color: var(--color-accent);
+  --nav-height: 68px;
 }
 
 .nav__inner {
@@ -225,7 +227,7 @@
 @media (max-width: 900px) {
   .nav__links {
     position: fixed;
-    top: 80px;
+    top: var(--nav-height, 80px);
     left: 0;
     right: 0;
     bottom: 0;
