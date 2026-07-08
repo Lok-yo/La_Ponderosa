@@ -10,8 +10,6 @@ const links = [
   { to: '/', label: 'Inicio' },
   { to: '/cortes', label: 'Cortes' },
   { to: '/calculadora', label: 'Calculadora' },
-  { to: '/guia-parrillera', label: 'Guía Parrillera' },
-  { to: '/recetas', label: 'Recetas' },
   { to: '/nosotros', label: 'Nosotros' },
   { to: '/contacto', label: 'Contacto' }
 ]

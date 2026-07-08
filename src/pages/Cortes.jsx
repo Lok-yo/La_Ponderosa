@@ -252,7 +252,7 @@ export default function Cortes() {
             </p>
             <div className="cuts-cta__buttons">
               <a
-                href="https://wa.me/526535362121?text=Hola%2C%20quisiera%20consultar%20sobre%20los%20cortes%20de%20res"
+                href="https://wa.me/5216531324510?text=Hola%2C%20quisiera%20consultar%20sobre%20los%20cortes%20de%20res"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn--primary"
@@ -260,9 +260,9 @@ export default function Cortes() {
                 <Icon.Whatsapp size={18} />
                 Consultar por WhatsApp
               </a>
-              <a href="tel:+526535362121" className="btn btn--outline">
+              <a href="tel:+526531324510" className="btn btn--outline">
                 <Icon.Phone size={18} />
-                Llamar al (653) 536 2121
+                Llamar al (653) 132 4510
               </a>
             </div>
           </div>

@@ -7,13 +7,11 @@ import './Calculadora.css'
 
 export default function Calculadora() {
   useReveal()
-  const { addToCart } = useCart()
 
   const [adults, setAdults] = useState(6)
   const [childrenCount, setChildrenCount] = useState(2)
   const [appetite, setAppetite] = useState('parrillero') // moderado | parrillero | tragon
   const [hasSides, setHasSides] = useState(true) // quesadillas, guacamole, etc.
-  const [addedSuccess, setAddedSuccess] = useState(false)
 
   // Calculations
   const calculation = useMemo(() => {
@@ -33,60 +31,16 @@ export default function Calculadora() {
 
     const totalKg = Number((totalGrams / 1000).toFixed(1))
 
-    // Cut distribution recommendation
-    const mainCutKg = Number((totalKg * 0.55).toFixed(1)) // Arrachera / Diezmillo / Cabrería
-    const ribsKg = Number((totalKg * 0.25).toFixed(1)) // Costilla / Chuletón
-    const specialtyKg = Number((totalKg * 0.20).toFixed(1)) // Mollejas / Tripa
-
     // Charcoal & extras
     const charcoalBags = Math.max(1, Math.ceil(totalKg / 3.5))
     const salsaLiters = Number((totalKg * 0.2).toFixed(1))
 
     return {
       totalKg,
-      mainCutKg,
-      ribsKg,
-      specialtyKg,
       charcoalBags,
       salsaLiters
     }
   }, [adults, childrenCount, appetite, hasSides])
-
-  const handleAddComboToCart = () => {
-    // Add recommended cuts to cart
-    addToCart({
-      cutId: 'diezmillo',
-      cutName: 'Diezmillo Norteño',
-      weightKg: Math.max(0.5, calculation.mainCutKg),
-      prepOption: 'asado',
-      thickness: '1 pulgada',
-      pricePerKg: 270,
-      notes: 'Sugerencia de Calculadora para Evento'
-    })
-
-    addToCart({
-      cutId: 'costilla-carga',
-      cutName: 'Costilla de Carga',
-      weightKg: Math.max(0.5, calculation.ribsKg),
-      prepOption: 'asado',
-      thickness: 'Estándar',
-      pricePerKg: 260,
-      notes: 'Sugerencia de Calculadora para Evento'
-    })
-
-    addToCart({
-      cutId: 'mollejas',
-      cutName: 'Mollejas de Res',
-      weightKg: Math.max(0.5, calculation.specialtyKg),
-      prepOption: 'fresco',
-      thickness: 'Estándar',
-      pricePerKg: 280,
-      notes: 'Sugerencia de Calculadora para Botana'
-    })
-
-    setAddedSuccess(true)
-    setTimeout(() => setAddedSuccess(false), 2000)
-  }
 
   return (
     <>
@@ -193,35 +147,7 @@ export default function Calculadora() {
                 </div>
               </div>
 
-              <div className="calc-breakdown">
-                <h4>Surtido Recomendado La Ponderosa:</h4>
-
-                <div className="breakdown-item">
-                  <div className="breakdown-item__info">
-                    <strong>🥩 Corte Principal (55%)</strong>
-                    <span>Diezmillo / Arrachera / Cabrería</span>
-                  </div>
-                  <strong className="breakdown-item__kg">{calculation.mainCutKg} kg</strong>
-                </div>
-
-                <div className="breakdown-item">
-                  <div className="breakdown-item__info">
-                    <strong>🍖 Costillares & Chuletón (25%)</strong>
-                    <span>Costilla de carga / Ribeye</span>
-                  </div>
-                  <strong className="breakdown-item__kg">{calculation.ribsKg} kg</strong>
-                </div>
-
-                <div className="breakdown-item">
-                  <div className="breakdown-item__info">
-                    <strong>🔥 Botana & Especialidad (20%)</strong>
-                    <span>Mollejas / Tripita de leche</span>
-                  </div>
-                  <strong className="breakdown-item__kg">{calculation.specialtyKg} kg</strong>
-                </div>
-              </div>
-
-              <div className="calc-extras">
+              <div className="calc-extras" style={{ marginTop: '2rem' }}>
                 <div className="extra-chip">
                   <Icon.Flame size={16} />
                   <span>{calculation.charcoalBags} bolsa(s) de carbón</span>
@@ -230,28 +156,6 @@ export default function Calculadora() {
                   <Icon.Sparkle size={16} />
                   <span>~{calculation.salsaLiters} L de salsa molcajeteada</span>
                 </div>
-              </div>
-
-              <div className="calc-actions">
-                <button
-                  className={`btn btn--gold calc-btn-add ${addedSuccess ? 'btn--success' : ''}`}
-                  onClick={handleAddComboToCart}
-                >
-                  {addedSuccess ? (
-                    <>
-                      <Icon.Check size={20} />
-                      ¡Surtido agregado al Carrito!
-                    </>
-                  ) : (
-                    <>
-                      <Icon.ShoppingBag size={20} />
-                      Agregar Surtido Sugerido al Pedido
-                    </>
-                  )}
-                </button>
-                <p className="calc-note">
-                  *Te asamos todo este surtido completamente gratis en mostrador.
-                </p>
               </div>
             </div>
           </div>

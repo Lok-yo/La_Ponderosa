@@ -55,7 +55,7 @@ export default function Contacto() {
       `• *Invitados estimados:* ${formData.peopleCount} personas%0A` +
       `• *Mensaje / Pedido:* ${formData.message || 'Sin mensaje adicional'}`
 
-    window.open(`https://wa.me/526535362121?text=${text}`, '_blank')
+    window.open(`https://wa.me/5216531324510?text=${text}`, '_blank')
   }
 
   return (
@@ -87,7 +87,7 @@ export default function Contacto() {
                   <Icon.MapPin size={20} />
                   <div>
                     <strong>Dirección:</strong>
-                    <p>Av. Nuevo León y Calle 22, San Luis Río Colorado, Sonora, México.</p>
+                    <p>Av. Tamaulipas y Calle 22, San Luis Río Colorado, Sonora, México.</p>
                   </div>
                 </div>
 
@@ -95,7 +95,7 @@ export default function Contacto() {
                   <Icon.Phone size={20} />
                   <div>
                     <strong>Teléfono Directo:</strong>
-                    <p>(653) 536 2121</p>
+                    <p>(653) 132 4510</p>
                   </div>
                 </div>
 
@@ -110,7 +110,7 @@ export default function Contacto() {
 
               <div className="contact-info__actions">
                 <a
-                  href="https://wa.me/526535362121?text=Hola%2C%20quisiera%20hacer%20una%20consulta"
+                  href="https://wa.me/5216531324510?text=Hola%2C%20quisiera%20hacer%20una%20consulta"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--primary"
@@ -119,7 +119,7 @@ export default function Contacto() {
                   Escribir por WhatsApp
                 </a>
                 <a
-                  href="https://maps.google.com/?q=San+Luis+Rio+Colorado+Sonora"
+                  href="https://www.google.com/maps/place/La+Ponderosa+22+-+Carnicer%C3%ADa/@32.4581798,-114.7621103,17.87z/data=!4m6!3m5!1s0x80d64e4ccd82d84d:0xeacf93dcf22c5748!8m2!3d32.4581798!4d-114.7621103!16s%2Fg%2F11b7d_8f_r?entry=ttu"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn--outline"

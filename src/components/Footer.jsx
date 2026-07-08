@@ -29,8 +29,6 @@ export default function Footer() {
               <li><Link to="/">Inicio</Link></li>
               <li><Link to="/cortes">Catálogo de Cortes</Link></li>
               <li><Link to="/calculadora">Calculadora de Eventos</Link></li>
-              <li><Link to="/guia-parrillera">Guía del Parrillero & Timer</Link></li>
-              <li><Link to="/recetas">Recetas Gourmet</Link></li>
               <li><Link to="/nosotros">Nosotros</Link></li>
               <li><Link to="/contacto">Contacto</Link></li>
             </ul>
@@ -41,11 +39,11 @@ export default function Footer() {
             <ul className="footer__contact">
               <li>
                 <Icon.MapPin size={16} />
-                <span>Av. Nuevo León y Calle 22<br/>San Luis Río Colorado, Son.</span>
+                <span>Av. Tamaulipas y Calle 22<br/>San Luis Río Colorado, Son.</span>
               </li>
               <li>
                 <Icon.Phone size={16} />
-                <a href="tel:+526535362121">(653) 53 6 2121</a>
+                <a href="tel:+526531324510">(653) 132 4510</a>
               </li>
               <li>
                 <Icon.Clock size={16} />
@@ -70,7 +68,7 @@ export default function Footer() {
                 <Icon.Facebook size={18} />
               </a>
               <a
-                href="https://wa.me/526535362121"
+                href="https://wa.me/5216531324510"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="WhatsApp"

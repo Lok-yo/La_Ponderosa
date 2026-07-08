@@ -8,8 +8,6 @@ import CartDrawer from './components/CartDrawer'
 import Home from './pages/Home'
 import Cortes from './pages/Cortes'
 import Calculadora from './pages/Calculadora'
-import GuiaParrillera from './pages/GuiaParrillera'
-import Recetas from './pages/Recetas'
 import Nosotros from './pages/Nosotros'
 import Contacto from './pages/Contacto'
 
@@ -32,8 +30,6 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cortes" element={<Cortes />} />
           <Route path="/calculadora" element={<Calculadora />} />
-          <Route path="/guia-parrillera" element={<GuiaParrillera />} />
-          <Route path="/recetas" element={<Recetas />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="*" element={<Home />} />

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 
 const CartContext = createContext()
 
-const STORE_PHONE = '526535362121' // San Luis Río Colorado
+const STORE_PHONE = '5216531324510' // San Luis Río Colorado (WhatsApp Móvil)
 
 export function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
