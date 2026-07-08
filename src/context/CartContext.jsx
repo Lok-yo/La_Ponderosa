@@ -71,10 +71,9 @@ export function CartProvider({ children }) {
   const generateWhatsAppUrl = () => {
     if (cart.length === 0) return ''
 
-    let message = `*¡Hola Carnicería La Ponderosa 22! Quisiera realizar el siguiente pedido:*%0A%0A`
+    let message = `*Hola Carnicería La Ponderosa. Quisiera realizar el siguiente pedido:*%0A%0A`
     
     cart.forEach((item, index) => {
-      const itemSubtotal = Math.round(item.weightKg * (item.pricePerKg || 0))
       let prepText = 'Fresco'
       if (item.prepOption === 'marinado') prepText = 'Marinado especial'
       if (item.prepOption === 'asado') prepText = 'Asado al momento (GRATIS)'
@@ -84,13 +83,9 @@ export function CartProvider({ children }) {
       message += `   • Servicio: ${prepText}%0A`
       if (item.thickness) message += `   • Grosor: ${item.thickness}%0A`
       if (item.notes) message += `   • Notas: ${item.notes}%0A`
-      message += `   • Est. Subtotal: $${itemSubtotal} MXN%0A%0A`
+      message += `%0A`
     })
 
-    const total = Math.round(getCartTotal())
-    message += `-----------------------------------%0A`
-    message += `*💰 TOTAL ESTIMADO: $${total} MXN*%0A`
-    message += `📍 *Entrega:* Pasar a la sucursal de San Luis Río Colorado%0A`
     message += `Por favor confirmen disponibilidad y tiempo de entrega. ¡Gracias!`
 
     return `https://wa.me/${STORE_PHONE}?text=${message}`
