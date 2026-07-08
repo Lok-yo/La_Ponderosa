@@ -232,9 +232,9 @@ export default function Cortes() {
                 <Icon.Whatsapp size={18} />
                 Consultar por WhatsApp
               </a>
-              <a href="tel:+526531324510" className="btn btn--outline">
+              <a href="tel:+526535362121" className="btn btn--outline">
                 <Icon.Phone size={18} />
-                Llamar al (653) 132 4510
+                Llamar al (653) 536 2121
               </a>
             </div>
           </div>

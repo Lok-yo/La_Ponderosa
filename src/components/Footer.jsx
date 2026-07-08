@@ -43,7 +43,7 @@ export default function Footer() {
               </li>
               <li>
                 <Icon.Phone size={16} />
-                <a href="tel:+526531324510">(653) 132 4510</a>
+                <a href="tel:+526535362121">(653) 536 2121</a>
               </li>
               <li>
                 <Icon.Clock size={16} />

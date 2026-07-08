@@ -95,7 +95,7 @@ export default function Contacto() {
                   <Icon.Phone size={20} />
                   <div>
                     <strong>Teléfono Directo:</strong>
-                    <p>(653) 132 4510</p>
+                    <p>(653) 536 2121</p>
                   </div>
                 </div>
 
