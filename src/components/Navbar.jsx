@@ -21,7 +21,11 @@ export default function Navbar() {
   const itemCount = getCartItemCount()
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 30)
+    const handler = () => {
+      const isScrolled = window.scrollY > 30
+      setScrolled(isScrolled)
+      document.documentElement.style.setProperty('--nav-height', isScrolled ? '68px' : '80px')
+    }
     handler()
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)

@@ -55,6 +55,7 @@ ol {
 /* DARK MODE (Default Steakhouse Obsidian & Ember) */
 :root,
 [data-theme="dark"] {
+  --nav-height: 80px;
   --color-bg-body: #120D0A;
   --color-bg-surface: #1C1511;
   --color-bg-muted: #271E18;
@@ -85,6 +86,7 @@ ol {
 
 /* LIGHT MODE (Warm Editorial Cream & Burgundy) */
 [data-theme="light"] {
+  --nav-height: 80px;
   --color-bg-body: #FBF8F2;
   --color-bg-surface: #FFFFFF;
   --color-bg-muted: #F2EAD9;
