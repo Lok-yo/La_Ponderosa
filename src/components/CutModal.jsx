@@ -6,11 +6,12 @@ import './CutModal.css'
 export default function CutModal({ cut, onClose }) {
   const { addToCart } = useCart()
 
-  const [weightKg, setWeightKg] = useState(1.0)
+  const [weightKg, setWeightKg] = useState('1.0')
   const [prepOption, setPrepOption] = useState('asado') // Default to popular free grill service
   const [thickness, setThickness] = useState('1 pulgada')
   const [notes, setNotes] = useState('')
   const [addedSuccess, setAddedSuccess] = useState(false)
+  const [errorFeedback, setErrorFeedback] = useState('')
 
   useEffect(() => {
     if (cut) {
@@ -23,13 +24,58 @@ export default function CutModal({ cut, onClose }) {
 
   if (!cut) return null
 
-  const subtotal = Math.round(weightKg * (cut.pricePerKg || 0))
+  const parsedWeight = parseFloat(weightKg)
+  const subtotal = Math.round((isNaN(parsedWeight) ? 0 : parsedWeight) * (cut.pricePerKg || 0))
+
+  const handleWeightChange = (e) => {
+    const val = e.target.value
+    setWeightKg(val)
+
+    const parsed = parseFloat(val)
+    if (!isNaN(parsed) && parsed < 0.2) {
+      setErrorFeedback('La cantidad menor permitida es 0.2 kg')
+    } else {
+      setErrorFeedback('')
+    }
+  }
+
+  const handleWeightBlur = () => {
+    const parsed = parseFloat(weightKg)
+    if (isNaN(parsed) || parsed < 0.2) {
+      setWeightKg(0.2)
+      setErrorFeedback('La cantidad menor permitida es 0.2 kg')
+      setTimeout(() => setErrorFeedback(''), 3000)
+    } else {
+      setErrorFeedback('')
+    }
+  }
+
+  const handleWeightAdjust = (amount) => {
+    const current = parseFloat(weightKg) || 0
+    const nextVal = Number((current + amount).toFixed(2))
+    if (nextVal < 0.2) {
+      setWeightKg(0.2)
+      setErrorFeedback('La cantidad menor permitida es 0.2 kg')
+      setTimeout(() => setErrorFeedback(''), 3000)
+    } else {
+      setWeightKg(nextVal)
+      setErrorFeedback('')
+    }
+  }
 
   const handleAddToCart = () => {
+    const finalWeight = parseFloat(weightKg)
+    if (isNaN(finalWeight) || finalWeight < 0.2) {
+      setWeightKg(0.2)
+      setErrorFeedback('La cantidad menor permitida es 0.2 kg')
+      setTimeout(() => setErrorFeedback(''), 3000)
+      return
+    }
+
     addToCart({
       cutId: cut.id,
       cutName: cut.name,
-      weightKg: Number(weightKg),
+      weightKg: finalWeight,
       prepOption,
       thickness,
       pricePerKg: cut.pricePerKg || 0,
@@ -53,7 +99,7 @@ export default function CutModal({ cut, onClose }) {
         {/* Header */}
         <div className="cut-modal__header">
           <div className="cut-modal__badge-group">
-            {cut.isRegional && <span className="badge badge--gold">⭐️ Especial Sonorense</span>}
+            {cut.isRegional && <span className="badge badge--gold">Especial Sonorense</span>}
             <span className="badge badge--dark">{cut.category}</span>
           </div>
           <button className="cut-modal__close" onClick={onClose} aria-label="Cerrar modal">
@@ -132,19 +178,19 @@ export default function CutModal({ cut, onClose }) {
                   onClick={() => setPrepOption('asado')}
                 >
                   <Icon.Flame size={16} />
-                  <span>🔥 Asado al momento (GRATIS)</span>
+                  <span>Asado al momento (GRATIS)</span>
                 </button>
                 <button
                   className={`prep-btn ${prepOption === 'marinado' ? 'prep-btn--active' : ''}`}
                   onClick={() => setPrepOption('marinado')}
                 >
-                  <span>🧂 Marinado especial</span>
+                  <span>Marinado especial</span>
                 </button>
                 <button
                   className={`prep-btn ${prepOption === 'fresco' ? 'prep-btn--active' : ''}`}
                   onClick={() => setPrepOption('fresco')}
                 >
-                  <span>🥩 Fresco (sin asar)</span>
+                  <span>Fresco (sin asar)</span>
                 </button>
               </div>
             </div>
@@ -154,20 +200,25 @@ export default function CutModal({ cut, onClose }) {
               <div className="form-group">
                 <label>Cantidad (Kilos):</label>
                 <div className="weight-input-group">
-                  <button onClick={() => setWeightKg(Math.max(0.5, Number((weightKg - 0.5).toFixed(1))))}>
+                  <button onClick={() => handleWeightAdjust(-0.5)}>
                     <Icon.Minus size={14} />
                   </button>
                   <input
                     type="number"
-                    step="0.5"
-                    min="0.5"
+                    step="0.1"
                     value={weightKg}
-                    onChange={(e) => setWeightKg(Math.max(0.5, parseFloat(e.target.value) || 0.5))}
+                    onChange={handleWeightChange}
+                    onBlur={handleWeightBlur}
                   />
-                  <button onClick={() => setWeightKg(Number((weightKg + 0.5).toFixed(1)))}>
+                  <button onClick={() => handleWeightAdjust(0.5)}>
                     <Icon.Plus size={14} />
                   </button>
                 </div>
+                {errorFeedback && (
+                  <div style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '0.3rem', fontWeight: '600' }}>
+                    {errorFeedback}
+                  </div>
+                )}
               </div>
 
               <div className="form-group">

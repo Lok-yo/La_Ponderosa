@@ -71,13 +71,13 @@ export function CartProvider({ children }) {
   const generateWhatsAppUrl = () => {
     if (cart.length === 0) return ''
 
-    let message = `*🔥 ¡Hola Carnicería La Ponderosa 22! Quisiera realizar el siguiente pedido:*%0A%0A`
+    let message = `*¡Hola Carnicería La Ponderosa 22! Quisiera realizar el siguiente pedido:*%0A%0A`
     
     cart.forEach((item, index) => {
       const itemSubtotal = Math.round(item.weightKg * (item.pricePerKg || 0))
-      let prepText = '🥩 Fresco'
-      if (item.prepOption === 'marinado') prepText = '🧂 Marinado especial'
-      if (item.prepOption === 'asado') prepText = '🔥 Asado al momento (GRATIS)'
+      let prepText = 'Fresco'
+      if (item.prepOption === 'marinado') prepText = 'Marinado especial'
+      if (item.prepOption === 'asado') prepText = 'Asado al momento (GRATIS)'
 
       message += `*${index + 1}. ${item.cutName}*%0A`
       message += `   • Cantidad: ${item.weightKg} kg%0A`

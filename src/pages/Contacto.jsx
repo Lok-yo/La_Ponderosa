@@ -49,7 +49,7 @@ export default function Contacto() {
     e.preventDefault()
     if (!formData.name || !formData.phone) return
 
-    const text = `*🔥 Consulta desde la Web - La Ponderosa 22*%0A%0A` +
+    const text = `*Consulta desde la Web - La Ponderosa 22*%0A%0A` +
       `• *Nombre:* ${formData.name}%0A` +
       `• *Teléfono:* ${formData.phone}%0A` +
       `• *Invitados estimados:* ${formData.peopleCount} personas%0A` +

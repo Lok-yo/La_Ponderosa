@@ -226,7 +226,7 @@ export default function Home() {
             sellamos tu carne al término exacto y te la entregamos lista para servir.
           </p>
           <div className="special__rules">
-            <span>🔥 Válido todos los días dentro del horario de atención</span>
+            <span>Válido todos los días dentro del horario de atención</span>
           </div>
         </div>
       </section>

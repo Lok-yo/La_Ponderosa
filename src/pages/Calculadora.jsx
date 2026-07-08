@@ -117,7 +117,7 @@ export default function Calculadora() {
                     className={`radio-btn ${appetite === 'tragon' ? 'radio-btn--active' : ''}`}
                     onClick={() => setAppetite('tragon')}
                   >
-                    <strong>Tragón norteño 🔥</strong>
+                    <strong>Tragón norteño</strong>
                     <span>~650g por persona</span>
                   </button>
                 </div>

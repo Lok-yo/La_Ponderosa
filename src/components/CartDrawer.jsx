@@ -81,9 +81,9 @@ export default function CartDrawer() {
 
                     <div className="cart-item__details">
                       <span className="cart-item__prep-badge">
-                        {item.prepOption === 'fresco' && '🥩 Fresco'}
-                        {item.prepOption === 'marinado' && '🧂 Marinado especial'}
-                        {item.prepOption === 'asado' && '🔥 Asado gratis'}
+                        {item.prepOption === 'fresco' && 'Fresco'}
+                        {item.prepOption === 'marinado' && 'Marinado especial'}
+                        {item.prepOption === 'asado' && 'Asado gratis'}
                       </span>
                       {item.thickness && <span className="cart-item__meta">Grosor: {item.thickness}</span>}
                     </div>

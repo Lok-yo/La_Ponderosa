@@ -51,7 +51,7 @@ export default function Footer() {
               </li>
               <li>
                 <Icon.Flame size={16} />
-                <span>🔥 Servicio de Asado GRATIS</span>
+                <span>Servicio de Asado GRATIS</span>
               </li>
             </ul>
           </div>

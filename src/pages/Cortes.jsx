@@ -15,7 +15,6 @@ export default function Cortes() {
   const [textureFilter, setTextureFilter] = useState('all')
   const [search, setSearch] = useState('')
   const [selectedCutForModal, setSelectedCutForModal] = useState(null)
-  const [addedCutId, setAddedCutId] = useState(null)
 
   useEffect(() => {
     if (location.state?.categoryId) {
@@ -40,21 +39,6 @@ export default function Cortes() {
   }, [filter, textureFilter, search])
 
   const totalCuts = cuts.length
-
-  const handleQuickAdd = (e, cut) => {
-    e.stopPropagation()
-    addToCart({
-      cutId: cut.id,
-      cutName: cut.name,
-      weightKg: 1.0,
-      prepOption: 'asado',
-      thickness: '1 pulgada',
-      pricePerKg: cut.pricePerKg || 280,
-      notes: ''
-    })
-    setAddedCutId(cut.id)
-    setTimeout(() => setAddedCutId(null), 1200)
-  }
 
   return (
     <>
@@ -166,7 +150,6 @@ export default function Cortes() {
             <div className="cuts-grid__inner">
               {filtered.map((cut, idx) => {
                 const cat = categories.find((c) => c.id === cut.category)
-                const isRecentlyAdded = addedCutId === cut.id
                 return (
                   <article
                     key={cut.id}
@@ -210,26 +193,15 @@ export default function Cortes() {
                     </div>
 
                     <div className="cut-card__foot-actions">
-                      <button className="cut-card__inspect-btn">
-                        <Icon.Info size={14} />
-                        Detalles
-                      </button>
                       <button
-                        className={`cut-card__add-btn ${isRecentlyAdded ? 'cut-card__add-btn--success' : ''}`}
-                        onClick={(e) => handleQuickAdd(e, cut)}
-                        title="Agregar 1 kg al carrito"
+                        className="cut-card__add-btn"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSelectedCutForModal(cut)
+                        }}
                       >
-                        {isRecentlyAdded ? (
-                          <>
-                            <Icon.Check size={14} />
-                            ¡Agregado!
-                          </>
-                        ) : (
-                          <>
-                            <Icon.Plus size={14} />
-                            Pedir (1kg)
-                          </>
-                        )}
+                        <Icon.ShoppingBag size={14} />
+                        Pedir
                       </button>
                     </div>
                   </article>
