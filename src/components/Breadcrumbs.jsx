@@ -16,6 +16,7 @@ export default function Breadcrumbs({ items }) {
   const trails = {
     '/': [],
     '/cortes': [{ label: 'Cortes' }],
+    '/calculadora': [{ label: 'Calculadora' }],
     '/nosotros': [{ label: 'Nosotros' }],
     '/contacto': [{ label: 'Contacto' }]
   }
