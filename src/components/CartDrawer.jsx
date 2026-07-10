@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useCart } from '../context/CartContext'
+import { useCurrency } from '../context/CurrencyContext'
 import { Icon } from './Icons'
 import './CartDrawer.css'
 
@@ -14,6 +15,7 @@ export default function CartDrawer() {
     clearCart,
     generateWhatsAppUrl
   } = useCart()
+  const { formatPrice } = useCurrency()
 
   useEffect(() => {
     if (isCartOpen) {
@@ -106,7 +108,7 @@ export default function CartDrawer() {
                           <Icon.Plus size={14} />
                         </button>
                       </div>
-                      <div className="cart-item__price">${subtotal} MXN</div>
+                      <div className="cart-item__price">{formatPrice(subtotal)}</div>
                     </div>
                   </div>
                 )
@@ -121,7 +123,7 @@ export default function CartDrawer() {
             <div className="cart-drawer__summary">
               <div className="cart-drawer__summary-row">
                 <span>Total Estimado ({cart.length} cortes):</span>
-                <strong className="cart-drawer__total">${total} MXN</strong>
+                <strong className="cart-drawer__total">{formatPrice(total)}</strong>
               </div>
               <p className="cart-drawer__disclaimer">
                 *Precios orientativos sujetas a pesaje exacto en báscula.

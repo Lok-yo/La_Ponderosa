@@ -6,10 +6,12 @@ import { cuts, categories, getCutsByCategory } from '../data/cuts'
 import CutModal from '../components/CutModal'
 import { useCart } from '../context/CartContext'
 import { useReveal } from '../hooks/useReveal'
+import { useCurrency } from '../context/CurrencyContext'
 import './Cortes.css'
 
 export default function Cortes() {
   const { addToCart } = useCart()
+  const { formatPrice } = useCurrency()
   const location = useLocation()
   const [filter, setFilter] = useState(() => location.state?.categoryId || 'all')
   const [textureFilter, setTextureFilter] = useState('all')
@@ -170,7 +172,7 @@ export default function Cortes() {
                     <p className="cut-card__en">{cut.english}</p>
 
                     <div className="cut-card__price-line">
-                      <strong>${cut.pricePerKg || 280} MXN</strong>
+                      <strong>{formatPrice(cut.pricePerKg || 280)}</strong>
                       <span>/ kg aprox.</span>
                     </div>
 

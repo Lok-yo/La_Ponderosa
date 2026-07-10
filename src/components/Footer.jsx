@@ -47,7 +47,10 @@ export default function Footer() {
               </li>
               <li>
                 <Icon.Clock size={16} />
-                <span>Lun a Dom · 10:00 AM — 7:00 PM</span>
+                <span>
+                  Lun–Sáb · 10:00 AM — 7:00 PM<br />
+                  <em style={{ fontSize: '0.85em', opacity: 0.75 }}>Martes cierra 4 PM · Dom cierra 6 PM</em>
+                </span>
               </li>
               <li>
                 <Icon.Flame size={16} />

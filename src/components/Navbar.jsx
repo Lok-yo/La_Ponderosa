@@ -4,6 +4,7 @@ import { Icon } from './Icons'
 import { useCart } from '../context/CartContext'
 import StoreStatusBadge from './StoreStatusBadge'
 import ThemeToggle from './ThemeToggle'
+import CurrencyToggle from './CurrencyToggle'
 import './Navbar.css'
 
 const links = [
@@ -70,6 +71,7 @@ export default function Navbar() {
         </ul>
 
         <div className="nav__actions">
+          <CurrencyToggle />
           <ThemeToggle />
 
           <button

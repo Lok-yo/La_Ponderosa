@@ -5,6 +5,7 @@ import { cuts, categories } from '../data/cuts'
 import MeatAnatomyMap from '../components/MeatAnatomyMap'
 import CutModal from '../components/CutModal'
 import { useReveal } from '../hooks/useReveal'
+import { useCurrency } from '../context/CurrencyContext'
 import './Home.css'
 
 const featuredIds = ['cabreria', 'chuleton', 'arrachera', 'diezmillo', 'tomahawk', 'ribeye-sonora']
@@ -59,6 +60,7 @@ const reviews = [
 export default function Home() {
   useReveal()
   const navigate = useNavigate()
+  const { formatPrice } = useCurrency()
   const [selectedCutForModal, setSelectedCutForModal] = useState(null)
 
   return (
@@ -186,7 +188,7 @@ export default function Home() {
                   <p className="featured__card-en">{cut.english}</p>
                   
                   <div className="featured__card-price">
-                    <strong>${cut.pricePerKg} MXN</strong>
+                    <strong>{formatPrice(cut.pricePerKg)}</strong>
                     <span>/ kg aprox.</span>
                   </div>
 

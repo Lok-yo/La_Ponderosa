@@ -16,15 +16,11 @@ const faqs = [
   },
   {
     question: '¿Hacen entregas a domicilio en San Luis Río Colorado?',
-    answer: 'Sí, contamos con servicio de entrega en la zona urbana de San Luis Río Colorado para pedidos programados.'
+    answer: 'No. No contamos con entras a domicilio todo se entrega personalmente en nuestro local'
   },
   {
     question: '¿Con cuánto tiempo debo pedir para un evento o carne asada grande?',
-    answer: 'Te recomendamos hacer tu pedido con al menos 2 a 4 horas de anticipación para garantizar que tus cortes estén perfectamente marinados y asados a tiempo.'
-  },
-  {
-    question: '¿Cómo conservar la carne si no la voy a asar hoy mismo?',
-    answer: 'Si la vas a asar mañana, mantenla en el refrigerador entre 0°C y 4°C en su empaque original sin abrir. Si es para días posteriores, puedes congelarla.'
+    answer: 'Puedes hacer tu pedido cuando quieras!.'
   }
 ]
 
@@ -33,29 +29,8 @@ export default function Contacto() {
 
   const [openFaq, setOpenFaq] = useState(0)
 
-  // Form state
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    peopleCount: '5-8',
-    message: ''
-  })
-
   const toggleFaq = (idx) => {
     setOpenFaq(openFaq === idx ? -1 : idx)
-  }
-
-  const handleSubmitWhatsApp = (e) => {
-    e.preventDefault()
-    if (!formData.name || !formData.phone) return
-
-    const text = `*Consulta desde la Web - La Ponderosa 22*%0A%0A` +
-      `• *Nombre:* ${formData.name}%0A` +
-      `• *Teléfono:* ${formData.phone}%0A` +
-      `• *Invitados estimados:* ${formData.peopleCount} personas%0A` +
-      `• *Mensaje / Pedido:* ${formData.message || 'Sin mensaje adicional'}`
-
-    window.open(`https://wa.me/5216531324510?text=${text}`, '_blank')
   }
 
   return (
@@ -103,7 +78,10 @@ export default function Contacto() {
                   <Icon.Clock size={20} />
                   <div>
                     <strong>Horario de Atención:</strong>
-                    <p>Lunes a Domingo: 10:00 AM – 7:00 PM (Horario Continuo)</p>
+                    <p>Lunes a Sábado: 10:00 AM – 7:00 PM</p>
+                    <p style={{ fontSize: '0.9em', opacity: 0.75, marginTop: '0.2rem' }}>
+                      Martes: cierra a las 4:00 PM · Domingos: cierra a las 6:00 PM
+                    </p>
                   </div>
                 </div>
               </div>
@@ -130,63 +108,6 @@ export default function Contacto() {
               </div>
             </div>
 
-            {/* Direct Form */}
-            <div className="contact-form-card reveal delay-1">
-              <h3>Envíanos un Mensaje Directo</h3>
-              <p>Completa este formulario y te responderemos de inmediato por WhatsApp.</p>
-
-              <form onSubmit={handleSubmitWhatsApp} className="contact-form">
-                <div className="form-group">
-                  <label>Tu Nombre Completo *</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Ej. Roberto Rodríguez"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>Número de Teléfono / WhatsApp *</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Ej. (653) 123 4567"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>¿Para cuántas personas es tu carne asada?</label>
-                  <select
-                    value={formData.peopleCount}
-                    onChange={(e) => setFormData({ ...formData, peopleCount: e.target.value })}
-                  >
-                    <option value="2-4">2 a 4 personas (Familiar chico)</option>
-                    <option value="5-8">5 a 8 personas</option>
-                    <option value="10-15">10 a 15 personas (Reunión)</option>
-                    <option value="20+">Más de 20 personas (Evento grande)</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label>Detalles o cortes de interés (Opcional)</label>
-                  <textarea
-                    rows="3"
-                    placeholder="Ej. Quisiera 2 kg de Cabrería y 1 kg de Mollejas asadas..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  />
-                </div>
-
-                <button type="submit" className="btn btn--gold form-submit-btn">
-                  <Icon.Whatsapp size={18} />
-                  Enviar Mensaje por WhatsApp
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </section>

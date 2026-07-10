@@ -24,6 +24,18 @@
   color: #E74C3C;
 }
 
+.store-badge--loading {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  animation: badgeLoadPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes badgeLoadPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
 .store-badge__pulse {
   width: 8px;
   height: 8px;

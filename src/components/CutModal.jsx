@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useCart } from '../context/CartContext'
+import { useCurrency } from '../context/CurrencyContext'
 import { Icon } from './Icons'
 import './CutModal.css'
 
 export default function CutModal({ cut, onClose }) {
   const { addToCart } = useCart()
+  const { formatPrice, convertPrice } = useCurrency()
 
   const [weightKg, setWeightKg] = useState('1.0')
   const [prepOption, setPrepOption] = useState('asado') // Default to popular free grill service
@@ -25,7 +27,7 @@ export default function CutModal({ cut, onClose }) {
   if (!cut) return null
 
   const parsedWeight = parseFloat(weightKg)
-  const subtotal = Math.round((isNaN(parsedWeight) ? 0 : parsedWeight) * (cut.pricePerKg || 0))
+  const subtotalMXN = Math.round((isNaN(parsedWeight) ? 0 : parsedWeight) * (cut.pricePerKg || 0))
 
   const handleWeightChange = (e) => {
     const val = e.target.value
@@ -113,7 +115,7 @@ export default function CutModal({ cut, onClose }) {
           <p className="cut-modal__english">{cut.english}</p>
 
           <div className="cut-modal__price-tag">
-            <span className="cut-modal__price">${cut.pricePerKg || 280} MXN</span>
+            <span className="cut-modal__price">{formatPrice(cut.pricePerKg || 280)}</span>
             <span className="cut-modal__unit">/ Kilo aproximado</span>
           </div>
 
@@ -250,7 +252,7 @@ export default function CutModal({ cut, onClose }) {
         <div className="cut-modal__footer">
           <div className="cut-modal__subtotal">
             <span>Subtotal estimado:</span>
-            <strong>${subtotal} MXN</strong>
+            <strong>{formatPrice(subtotalMXN)}</strong>
           </div>
           <button
             className={`btn btn--primary cut-modal__add-btn ${addedSuccess ? 'btn--success' : ''}`}

@@ -7,10 +7,8 @@
 }
 
 .contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 2.5rem;
-  align-items: start;
+  display: flex;
+  justify-content: center;
 }
 
 .contact-info-card {
