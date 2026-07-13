@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useCart } from '../context/CartContext'
+import React, { useEffect, useRef } from 'react'
+import { registerDialogLayer, useCart } from '../context/CartContext'
 import { useCurrency } from '../context/CurrencyContext'
 import { Icon } from './Icons'
 import './CartDrawer.css'
@@ -17,12 +17,43 @@ export default function CartDrawer() {
   } = useCart()
   const { formatPrice } = useCurrency()
 
+  const dialogRef = useRef(null)
+  const closeButtonRef = useRef(null)
+  const closeCartRef = useRef(closeCart)
+
   useEffect(() => {
-    if (isCartOpen) {
-      document.body.style.overflow = 'hidden'
-    }
+    closeCartRef.current = closeCart
+  }, [closeCart])
+
+  useEffect(() => {
+    if (!isCartOpen) return undefined
+
+    const returnFocusElement = document.activeElement
+    const dialogElement = dialogRef.current
+    const unregisterDialog = registerDialogLayer(() => closeCartRef.current(), dialogElement)
+
+    closeButtonRef.current?.focus({ preventScroll: true })
+
     return () => {
-      document.body.style.overflow = ''
+      unregisterDialog()
+
+      const activeElement = document.activeElement
+      const focusWasInDialog =
+        activeElement === document.body || dialogElement?.contains(activeElement)
+
+      if (!focusWasInDialog) return
+
+      const fallbackFocusElement = document.querySelector('.nav__cart-btn')
+      const elementToFocus =
+        returnFocusElement instanceof HTMLElement &&
+        returnFocusElement !== document.body &&
+        returnFocusElement.isConnected
+          ? returnFocusElement
+          : fallbackFocusElement
+
+      if (elementToFocus instanceof HTMLElement && elementToFocus.isConnected) {
+        elementToFocus.focus({ preventScroll: true })
+      }
     }
   }, [isCartOpen])
 
@@ -34,18 +65,27 @@ export default function CartDrawer() {
   return (
     <div className="cart-drawer-overlay" onClick={closeCart}>
       <div
+        ref={dialogRef}
         className="cart-drawer"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
-        aria-label="Carrito de Pedidos"
+        aria-modal="true"
+        aria-label="Tu pedido"
+        tabIndex={-1}
       >
         {/* Header */}
         <div className="cart-drawer__header">
           <div className="cart-drawer__title-group">
             <Icon.ShoppingBag size={22} className="cart-drawer__icon" />
-            <h2>Tu Cotización de Pedido</h2>
+            <h2>Tu pedido</h2>
           </div>
-          <button className="cart-drawer__close" onClick={closeCart} aria-label="Cerrar carrito">
+          <button
+            ref={closeButtonRef}
+            type="button"
+            className="cart-drawer__close"
+            onClick={closeCart}
+            aria-label="Cerrar carrito"
+          >
             <Icon.Close size={20} />
           </button>
         </div>
@@ -53,7 +93,7 @@ export default function CartDrawer() {
         {/* Free grill service callout */}
         <div className="cart-drawer__banner">
           <Icon.Flame size={18} />
-          <span>¡Recuerda que te asamos la carne <strong>GRATIS</strong> al momento!</span>
+          <span>La carne la pagas. El asado, <strong>no</strong>.</span>
         </div>
 
         {/* Body */}
@@ -61,8 +101,8 @@ export default function CartDrawer() {
           {cart.length === 0 ? (
             <div className="cart-drawer__empty">
               <Icon.ShoppingBag size={48} />
-              <p>Tu carrito está vacío</p>
-              <span>Explora nuestro catálogo y agrega los cortes que deseas para tu carne asada.</span>
+              <p>Todavía no hay nada sobre el asador.</p>
+              <span>Explora el catálogo y agrega los cortes que quieres llevar.</span>
             </div>
           ) : (
             <div className="cart-drawer__list">
@@ -73,9 +113,10 @@ export default function CartDrawer() {
                     <div className="cart-item__head">
                       <h3 className="cart-item__title">{item.cutName}</h3>
                       <button
+                        type="button"
                         className="cart-item__remove"
                         onClick={() => removeFromCart(item.id)}
-                        title="Eliminar corte"
+                        aria-label={`Eliminar ${item.cutName} del pedido`}
                       >
                         <Icon.Trash size={16} />
                       </button>
@@ -95,15 +136,17 @@ export default function CartDrawer() {
                     <div className="cart-item__foot">
                       <div className="cart-item__weight-control">
                         <button
+                          type="button"
                           onClick={() => updateWeight(item.id, item.weightKg - 0.5)}
-                          title="Restar 0.5 kg"
+                          aria-label={`Restar 0.5 kilos de ${item.cutName}`}
                         >
                           <Icon.Minus size={14} />
                         </button>
                         <span className="cart-item__weight">{item.weightKg} kg</span>
                         <button
+                          type="button"
                           onClick={() => updateWeight(item.id, item.weightKg + 0.5)}
-                          title="Sumar 0.5 kg"
+                          aria-label={`Sumar 0.5 kilos de ${item.cutName}`}
                         >
                           <Icon.Plus size={14} />
                         </button>
@@ -126,7 +169,7 @@ export default function CartDrawer() {
                 <strong className="cart-drawer__total">{formatPrice(total)}</strong>
               </div>
               <p className="cart-drawer__disclaimer">
-                *Precios orientativos sujetas a pesaje exacto en báscula.
+                Precio estimado. Confirmamos peso, disponibilidad y hora por WhatsApp.
               </p>
             </div>
 
@@ -138,10 +181,10 @@ export default function CartDrawer() {
                 className="btn btn--primary cart-drawer__btn-wa"
               >
                 <Icon.Whatsapp size={20} />
-                Enviar Pedido por WhatsApp
+                Enviar para confirmar
               </a>
-              <button className="cart-drawer__btn-clear" onClick={clearCart}>
-                Vaciar Carrito
+              <button type="button" className="cart-drawer__btn-clear" onClick={clearCart}>
+                Vaciar pedido
               </button>
             </div>
           </div>

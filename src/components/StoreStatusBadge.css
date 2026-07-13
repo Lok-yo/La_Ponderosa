@@ -1,81 +1,45 @@
-/* =========================================
-   STORE STATUS BADGE CSS
-   ========================================= */
-
 .store-badge {
+  min-height: 38px;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  transition: var(--transition);
+  gap: 0.42rem;
+  padding: 0.45rem 0.65rem;
+  color: var(--color-text-soft);
+  font-size: 0.69rem;
+  font-weight: 650;
+  white-space: nowrap;
 }
 
-.store-badge--open {
-  background: rgba(39, 174, 96, 0.12);
-  border: 1px solid rgba(39, 174, 96, 0.3);
-  color: #27AE60;
-}
-
-.store-badge--closed {
-  background: rgba(231, 76, 60, 0.12);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  color: #E74C3C;
-}
-
-.store-badge--loading {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--color-border);
+.store-badge svg {
   color: var(--color-text-muted);
-  animation: badgeLoadPulse 1.5s ease-in-out infinite;
-}
-
-@keyframes badgeLoadPulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
 }
 
 .store-badge__pulse {
   width: 8px;
   height: 8px;
+  flex: 0 0 auto;
   border-radius: 50%;
-  position: relative;
+  background: currentColor;
+  box-shadow: 0 0 0 4px currentColor;
 }
 
 .store-badge--open .store-badge__pulse {
-  background: #27AE60;
-  box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
-  animation: pulseGreen 1.8s infinite;
+  color: rgba(39, 103, 73, 0.18);
+  background: var(--color-success);
 }
 
 .store-badge--closed .store-badge__pulse {
-  background: #E74C3C;
-}
-
-@keyframes pulseGreen {
-  0% {
-    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(39, 174, 96, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(39, 174, 96, 0);
-  }
-}
-
-.store-badge__text {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
+  color: rgba(197, 66, 33, 0.15);
+  background: var(--color-primary);
 }
 
 .store-badge__text strong {
-  font-weight: 600;
+  color: var(--color-text-main);
+  font-weight: 800;
 }
 
-.store-badge__sub {
-  opacity: 0.85;
-  font-size: 0.75rem;
+@media (max-width: 520px) {
+  .store-badge__text span {
+    display: none;
+  }
 }

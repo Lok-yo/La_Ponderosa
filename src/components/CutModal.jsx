@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
-import { useCart } from '../context/CartContext'
+import React, { useState, useEffect, useRef } from 'react'
+import { registerDialogLayer, useCart } from '../context/CartContext'
 import { useCurrency } from '../context/CurrencyContext'
 import { Icon } from './Icons'
 import './CutModal.css'
 
 export default function CutModal({ cut, onClose }) {
   const { addToCart } = useCart()
-  const { formatPrice, convertPrice } = useCurrency()
+  const { formatPrice } = useCurrency()
+
+  const dialogRef = useRef(null)
+  const closeButtonRef = useRef(null)
+  const onCloseRef = useRef(onClose)
 
   const [weightKg, setWeightKg] = useState('1.0')
   const [prepOption, setPrepOption] = useState('asado') // Default to popular free grill service
@@ -16,14 +20,44 @@ export default function CutModal({ cut, onClose }) {
   const [errorFeedback, setErrorFeedback] = useState('')
 
   useEffect(() => {
+    onCloseRef.current = onClose
+  }, [onClose])
+
+  useEffect(() => {
     if (cut) {
       setPrepOption(cut.canGrill === false ? 'fresco' : 'asado')
       setThickness('1 pulgada')
       setWeightKg('1.0')
-      document.body.style.overflow = 'hidden'
+      setNotes('')
+      setAddedSuccess(false)
+      setErrorFeedback('')
     }
+  }, [cut])
+
+  useEffect(() => {
+    if (!cut) return undefined
+
+    const returnFocusElement = document.activeElement
+    const dialogElement = dialogRef.current
+    const unregisterDialog = registerDialogLayer(() => onCloseRef.current(), dialogElement)
+
+    closeButtonRef.current?.focus({ preventScroll: true })
+
     return () => {
-      document.body.style.overflow = ''
+      unregisterDialog()
+
+      const activeElement = document.activeElement
+      const focusWasInDialog =
+        activeElement === document.body || dialogElement?.contains(activeElement)
+
+      if (
+        focusWasInDialog &&
+        returnFocusElement instanceof HTMLElement &&
+        returnFocusElement !== document.body &&
+        returnFocusElement.isConnected
+      ) {
+        returnFocusElement.focus({ preventScroll: true })
+      }
     }
   }, [cut])
 
@@ -99,18 +133,27 @@ export default function CutModal({ cut, onClose }) {
   return (
     <div className="cut-modal-overlay" onClick={onClose}>
       <div
+        ref={dialogRef}
         className="cut-modal"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
+        aria-modal="true"
         aria-label={`Detalles de ${cut.name}`}
+        tabIndex={-1}
       >
         {/* Header */}
         <div className="cut-modal__header">
           <div className="cut-modal__badge-group">
-            {cut.isRegional && <span className="badge badge--gold">Especial Sonorense</span>}
+            {cut.isRegional && <span className="badge badge--gold">Favorito de la casa</span>}
             <span className="badge badge--dark">{cut.category}</span>
           </div>
-          <button className="cut-modal__close" onClick={onClose} aria-label="Cerrar modal">
+          <button
+            ref={closeButtonRef}
+            type="button"
+            className="cut-modal__close"
+            onClick={onClose}
+            aria-label="Cerrar modal"
+          >
             <Icon.Close size={20} />
           </button>
         </div>
@@ -122,7 +165,7 @@ export default function CutModal({ cut, onClose }) {
 
           <div className="cut-modal__price-tag">
             <span className="cut-modal__price">{formatPrice(cut.pricePerKg || 280)}</span>
-            <span className="cut-modal__unit">/ Kilo aproximado</span>
+            <span className="cut-modal__unit">por kilo · estimado</span>
           </div>
 
           <p className="cut-modal__desc">{cut.description}</p>
@@ -175,16 +218,18 @@ export default function CutModal({ cut, onClose }) {
 
           {/* Order Customizer Form */}
           <div className="cut-modal__customizer">
-            <h3>Personalizar para tu Pedido:</h3>
+            <h3>Hazlo a tu manera.</h3>
 
             {/* Preparation Option */}
             <div className="form-group">
               <label>Servicio de preparación:</label>
-              <div className="prep-options">
+              <div className="prep-options" role="group" aria-label="Servicio de preparación">
                 {canGrill && (
                   <button
+                    type="button"
                     className={`prep-btn ${prepOption === 'asado' ? 'prep-btn--active' : ''}`}
                     onClick={() => setPrepOption('asado')}
+                    aria-pressed={prepOption === 'asado'}
                   >
                     <Icon.Flame size={16} />
                     <span>Asado al momento (GRATIS)</span>
@@ -192,15 +237,19 @@ export default function CutModal({ cut, onClose }) {
                 )}
                 {cut.canMarinate !== false && (
                   <button
+                    type="button"
                     className={`prep-btn ${prepOption === 'marinado' ? 'prep-btn--active' : ''}`}
                     onClick={() => setPrepOption('marinado')}
+                    aria-pressed={prepOption === 'marinado'}
                   >
                     <span>Marinado especial</span>
                   </button>
                 )}
                 <button
+                  type="button"
                   className={`prep-btn ${prepOption === 'fresco' ? 'prep-btn--active' : ''}`}
                   onClick={() => setPrepOption('fresco')}
+                  aria-pressed={prepOption === 'fresco'}
                 >
                   <span>Fresco (sin asar)</span>
                 </button>
@@ -209,40 +258,52 @@ export default function CutModal({ cut, onClose }) {
 
             {/* Weight selector */}
             <div className="form-row">
-              {allowThickness && <div className="form-group">
+              <div className="form-group">
                 <label>Cantidad (Kilos):</label>
                 <div className="weight-input-group">
-                  <button onClick={() => handleWeightAdjust(-0.5)}>
+                  <button
+                    type="button"
+                    onClick={() => handleWeightAdjust(-0.5)}
+                    aria-label="Restar 0.5 kilos"
+                  >
                     <Icon.Minus size={14} />
                   </button>
                   <input
                     type="number"
+                    min="0.2"
                     step="0.1"
                     value={weightKg}
                     onChange={handleWeightChange}
                     onBlur={handleWeightBlur}
+                    aria-label="Cantidad en kilos"
                   />
-                  <button onClick={() => handleWeightAdjust(0.5)}>
+                  <button
+                    type="button"
+                    onClick={() => handleWeightAdjust(0.5)}
+                    aria-label="Sumar 0.5 kilos"
+                  >
                     <Icon.Plus size={14} />
                   </button>
                 </div>
                 {errorFeedback && (
-                  <div style={{ color: '#E74C3C', fontSize: '0.78rem', marginTop: '0.3rem', fontWeight: '600' }}>
+                  <div role="alert" style={{ color: '#9f2918', fontSize: '0.78rem', marginTop: '0.3rem', fontWeight: '700' }}>
                     {errorFeedback}
                   </div>
                 )}
-              </div>}
-
-              <div className="form-group">
-                <label>Grosor de corte:</label>
-                <select value={thickness} onChange={(e) => setThickness(e.target.value)}>
-                  <option value="Delgado (1/2 pulgada)">Delgado (1/2")</option>
-                  <option value="Estándar (3/4 pulgada)">Estándar (3/4")</option>
-                  <option value="1 pulgada">1 pulgada (Parrillero)</option>
-                  <option value="Corte grueso (1 1/2 pulgada)">Corte grueso (1 1/2")</option>
-                  <option value="Pieza entera sin cortar">Pieza entera sin cortar</option>
-                </select>
               </div>
+
+              {allowThickness && (
+                <div className="form-group">
+                  <label>Grosor de corte:</label>
+                  <select value={thickness} onChange={(e) => setThickness(e.target.value)} aria-label="Grosor del corte">
+                    <option value="Delgado (1/2 pulgada)">Delgado (1/2")</option>
+                    <option value="Estándar (3/4 pulgada)">Estándar (3/4")</option>
+                    <option value="1 pulgada">1 pulgada (Parrillero)</option>
+                    <option value="Corte grueso (1 1/2 pulgada)">Corte grueso (1 1/2")</option>
+                    <option value="Pieza entera sin cortar">Pieza entera sin cortar</option>
+                  </select>
+                </div>
+              )}
             </div>
 
             {/* Notes */}
@@ -253,6 +314,7 @@ export default function CutModal({ cut, onClose }) {
                 placeholder="Ej. Poca sal, empacado en bolsas separadas..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
+                aria-label="Instrucciones o notas adicionales"
               />
             </div>
           </div>
@@ -276,7 +338,7 @@ export default function CutModal({ cut, onClose }) {
             ) : (
               <>
                 <Icon.ShoppingBag size={18} />
-                Agregar al Carrito
+                Agregar al pedido
               </>
             )}
           </button>

@@ -1,198 +1,219 @@
-/* =========================================
-   MEAT ANATOMY MAP CSS
-   ========================================= */
-
 .anatomy-map {
-  background: var(--color-bg-surface);
-  color: var(--color-text-main);
-  border-radius: 16px;
-  padding: 3rem 2.5rem;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--color-border);
-  margin: 3rem 0;
-  transition: all 300ms ease;
+  color: #fff;
 }
 
 .anatomy-map__header {
-  text-align: center;
-  max-width: 640px;
-  margin: 0 auto 2.5rem;
+  display: grid;
+  grid-template-columns: 0.6fr 1fr;
+  align-items: end;
+  gap: 1rem 3rem;
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.anatomy-map__header .eyebrow {
+  align-self: start;
 }
 
 .anatomy-map__header h2 {
-  color: var(--color-text-main);
-  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  margin-bottom: 0.8rem;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: #fff;
+  font-size: clamp(3.5rem, 7vw, 7rem);
 }
 
 .anatomy-map__header p {
-  color: var(--color-text-soft);
-  font-size: 1rem;
+  max-width: 450px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.95rem;
 }
 
 .anatomy-map__content {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: start;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.2fr);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .anatomy-map__zones {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .anatomy-zone-btn {
-  display: flex;
+  width: 100%;
+  min-height: 100px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 1.25rem;
-  background: var(--color-bg-body);
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  color: var(--color-text-main);
+  padding: 1.2rem 1.4rem;
+  color: rgba(255, 255, 255, 0.72);
+  background: transparent;
   text-align: left;
-  transition: all 220ms ease;
-  cursor: pointer;
+  transition: color var(--transition), background var(--transition);
 }
 
-.anatomy-zone-btn:hover {
-  background: var(--color-bg-muted);
-  border-color: var(--color-accent);
-  transform: translateX(4px);
+.anatomy-zone-btn + .anatomy-zone-btn {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+.anatomy-zone-btn:hover,
 .anatomy-zone-btn--active {
-  background: var(--color-bg-muted);
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 15px rgba(158, 56, 56, 0.15);
+  color: var(--color-dark);
+  background: var(--color-accent);
 }
 
 .anatomy-zone-btn__icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: rgba(212, 175, 55, 0.15);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
   color: var(--color-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
 }
 
+.anatomy-zone-btn:hover .anatomy-zone-btn__icon,
 .anatomy-zone-btn--active .anatomy-zone-btn__icon {
-  background: var(--color-primary);
-  color: #FFFFFF;
+  color: var(--color-primary);
 }
 
 .anatomy-zone-btn__info {
-  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .anatomy-zone-btn__info strong {
-  font-size: 0.95rem;
-  color: var(--color-text-main);
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.05;
 }
 
 .anatomy-zone-btn__info span {
-  font-size: 0.78rem;
-  color: var(--color-text-soft);
-}
-
-.anatomy-zone-btn__arrow {
-  color: var(--color-text-muted);
-  transition: transform 200ms ease;
-}
-
-.anatomy-zone-btn--active .anatomy-zone-btn__arrow {
-  color: var(--color-accent);
-  transform: translateX(4px);
+  margin-top: 0.28rem;
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .anatomy-map__card {
-  background: var(--color-bg-body);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.anatomy-card__head {
-  margin-bottom: 1.25rem;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2rem, 5vw, 4.5rem);
+  background:
+    radial-gradient(circle at 100% 0%, rgba(197, 66, 33, 0.3), transparent 22rem),
+    #201a16;
 }
 
 .anatomy-card__badge {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
   color: var(--color-accent);
-  font-weight: 700;
-  display: inline-block;
-  margin-bottom: 0.4rem;
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .anatomy-card__head h3 {
-  font-size: 1.6rem;
-  color: var(--color-text-main);
-  font-family: 'Playfair Display', Georgia, serif;
-  margin-bottom: 0.2rem;
+  margin-top: 0.9rem;
+  color: #fff;
+  font-size: clamp(2.6rem, 5vw, 5rem);
 }
 
 .anatomy-card__tagline {
-  font-size: 0.9rem;
-  color: var(--color-text-soft);
+  display: block;
+  margin-top: 0.8rem;
+  color: var(--color-primary-soft);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
   font-style: italic;
 }
 
 .anatomy-card__desc {
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: var(--color-text-body);
-  margin-bottom: 1.5rem;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 1.25rem;
+  max-width: 650px;
+  margin-top: 1.6rem;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.anatomy-card__cuts-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .anatomy-card__cuts-section h4 {
-  font-size: 0.85rem;
-  color: var(--color-accent);
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.48);
+  font-family: var(--font-sans);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.8rem;
 }
 
 .anatomy-card__cuts-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1.75rem;
 }
 
 .anatomy-cut-tag {
-  background: var(--color-bg-muted);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-main);
-  font-size: 0.82rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 20px;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  padding: 0.5rem 0.65rem;
+  color: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.72rem;
+}
+
+.anatomy-cut-tag svg {
+  color: var(--color-accent);
 }
 
 .anatomy-card__action {
-  width: 100%;
-  justify-content: center;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.anatomy-card__action.btn--primary {
+  box-shadow: 5px 5px 0 var(--color-accent);
 }
 
 @media (max-width: 850px) {
-  .anatomy-map {
-    padding: 2rem 1.25rem;
+  .anatomy-map__header {
+    grid-template-columns: 1fr;
   }
+
+  .anatomy-map__header h2 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
   .anatomy-map__content {
     grid-template-columns: 1fr;
+  }
+
+  .anatomy-map__zones {
+    display: flex;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    scroll-snap-type: x mandatory;
+  }
+
+  .anatomy-zone-btn {
+    min-width: 245px;
+    scroll-snap-align: start;
+  }
+
+  .anatomy-zone-btn + .anatomy-zone-btn {
+    border-top: 0;
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+@media (max-width: 520px) {
+  .anatomy-map__card {
+    min-height: 570px;
   }
 }

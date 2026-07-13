@@ -1,56 +1,50 @@
-# Carnicería La Ponderosa 22
+# La Ponderosa 22
 
-Sitio web profesional para Carnicería La Ponderosa 22, con catálogo educativo de cortes de res, información de contacto y horarios.
+Sitio web de Carnicería La Ponderosa 22 en San Luis Río Colorado. La experiencia permite explorar el mostrador, personalizar cortes, calcular una carne asada y enviar una cotización completa por WhatsApp.
 
-Construido con **React + Vite** y **React Router**.
+## Tecnología
 
-## Estructura
+- React 18
+- React Router 6
+- Vite 8
+- Fuentes variables locales con Fontsource
+- CSS responsive sin framework de componentes
 
-```
-la-ponderosa/
-├── public/                  # Assets estáticos
-├── src/
-│   ├── components/          # Componentes reutilizables (Navbar, Footer, Breadcrumbs, Icons)
-│   ├── pages/               # Páginas/rutas (Home, Cortes, Nosotros, Contacto)
-│   ├── data/                # Catálogo de cortes de res
-│   ├── styles/              # CSS global
-│   ├── App.jsx              # Layout principal + rutas
-│   └── main.jsx             # Entry point
-├── index.html               # HTML base de Vite
-├── package.json
-└── vite.config.js
-```
+## Funciones principales
 
-## Comandos
-
-```bash
-# Instalar dependencias
-npm install
-
-# Iniciar servidor de desarrollo (http://localhost:5173)
-npm run dev
-
-# Compilar para producción (carpeta dist/)
-npm run build
-
-# Previsualizar el build de producción
-npm run preview
-```
+- Catálogo con 16 productos, búsqueda y filtros por categoría y textura.
+- Personalizador de kilos, grosor, preparación y notas.
+- Calculadora para eventos con tres mezclas de cortes y presupuesto estimado.
+- Carrito persistente y pedido codificado correctamente para WhatsApp.
+- Conversión MXN/USD con tasa en caché y respaldo sin conexión.
+- Estado de la sucursal calculado en la zona horaria de Sonora.
+- Mapa, horarios, teléfono, preguntas frecuentes y enlaces de contacto.
+- Metadatos por ruta, Open Graph, portada social y datos estructurados de negocio local.
+- Navegación por teclado, foco contenido en diálogos, reducción de movimiento y objetivos táctiles amplios.
 
 ## Rutas
 
-| Ruta | Página | Breadcrumb |
-|------|--------|------------|
-| `/` | Inicio | — |
-| `/cortes` | Catálogo de cortes | Inicio > Cortes |
-| `/nosotros` | Nuestra historia | Inicio > Nosotros |
-| `/contacto` | Contacto y ubicación | Inicio > Contacto |
+| Ruta | Contenido |
+|---|---|
+| `/` | Inicio y propuesta de servicio |
+| `/cortes` | Catálogo y personalización |
+| `/calculadora` | Planeador de carne asada |
+| `/nosotros` | Manera de trabajar |
+| `/contacto` | Horarios, mapa y preguntas frecuentes |
+| Cualquier otra | Página 404 |
 
-## Características
+## Desarrollo
 
-- **Sin emojis** — íconos SVG inline profesionales
-- **Breadcrumbs** en cada ruta (React Router)
-- **Diseño editorial** — enfoque en tipografía serif y paleta sobria
-- **Responsive** — mobile, tablet y escritorio
-- **Catálogo educativo** con 24 cortes de res clasificados por categoría
-- **SEO básico** con meta description, theme-color y structured data
+```bash
+npm install
+npm run dev
+```
+
+Compilación de producción:
+
+```bash
+npm run build
+npm run preview
+```
+
+Los precios son estimaciones por kilo. El peso, la disponibilidad, el total y la hora de recogida se confirman directamente con la sucursal.
