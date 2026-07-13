@@ -54,11 +54,11 @@ export default function Cortes() {
       {/* Page header */}
       <header className="page-header">
         <div className="container-narrow">
-          <span className="eyebrow reveal">Catálogo de la Res</span>
-          <h1 className="page-header__title reveal">Cortes de Res & Especialidades</h1>
+          <span className="eyebrow reveal">Catálogo del Mostrador</span>
+          <h1 className="page-header__title reveal">Carnes, Cortes & Complementos</h1>
           <p className="page-header__lead reveal">
-            Conoce los {totalCuts} cortes que trabajamos diariamente en La Ponderosa 22.
-            Compara marmoleo, origen, precios orientativos por kilo y elige tu preparación ideal.
+            Conoce los {totalCuts} productos disponibles en La Ponderosa 22.
+            Compara opciones, precios por kilo y elige tu preparación ideal.
           </p>
         </div>
       </header>
@@ -97,7 +97,7 @@ export default function Cortes() {
                 <Icon.Search size={16} className="filter-bar__search-icon" />
                 <input
                   type="text"
-                  placeholder="Buscar corte por nombre, inglés o zona..."
+                  placeholder="Buscar producto por nombre o tipo..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
@@ -123,8 +123,8 @@ export default function Cortes() {
         <div className="container">
           <p>
             {filtered.length === totalCuts
-              ? `Mostrando los ${totalCuts} cortes de la casa`
-              : `Mostrando ${filtered.length} de ${totalCuts} cortes`}
+              ? `Mostrando los ${totalCuts} productos de la casa`
+              : `Mostrando ${filtered.length} de ${totalCuts} productos`}
           </p>
         </div>
       </div>

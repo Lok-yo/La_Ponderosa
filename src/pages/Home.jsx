@@ -8,7 +8,7 @@ import { useReveal } from '../hooks/useReveal'
 import { useCurrency } from '../context/CurrencyContext'
 import './Home.css'
 
-const featuredIds = ['cabreria', 'chuleton', 'arrachera', 'diezmillo', 'tomahawk', 'ribeye-sonora']
+const featuredIds = ['filete-cabreria', 'rib-eye', 'arrachera-marinada', 'diezmillo', 'rib-fingers', 'costilla-marinada']
 
 const values = [
   {
@@ -30,30 +30,6 @@ const values = [
     icon: <Icon.Leaf size={32} />,
     title: 'Rotación y frescura diaria',
     text: 'Recibimos canal fresco todos los días. Sin envejecimiento indeseado en mostrador: frescura real 7 días a la semana.'
-  }
-]
-
-const reviews = [
-  {
-    author: 'Carlos Mendoza',
-    city: 'San Luis Río Colorado',
-    text: 'La Cabrería y el Diezmillo Norteño de La Ponderosa no tienen competencia. Además, que te asen la carne gratis te salva la vuelta el fin de semana.',
-    stars: 5,
-    tag: 'Cliente Frecuente'
-  },
-  {
-    author: 'Ing. Fernando Gastélum',
-    city: 'San Luis Río Colorado',
-    text: 'Pedimos para una carne asada de 20 personas usando la calculadora de la página. El cálculo fue exacto y la arrachera venía súper suave.',
-    stars: 5,
-    tag: 'Evento Familiar'
-  },
-  {
-    author: 'Mariana Ruiz',
-    city: 'San Luis Río Colorado',
-    text: 'Excelente servicio por WhatsApp. Hice mi pedido en la mañana, escogí servicio de asado y a las 2 PM pasé por mi carne calentita.',
-    stars: 5,
-    tag: 'Pedido WhatsApp'
   }
 ]
 
@@ -84,11 +60,11 @@ export default function Home() {
           <div className="hero__content">
             <span className="hero__eyebrow">Carnicería & Steakhouse · San Luis Río Colorado</span>
             <h1 className="hero__title">
-              Cortes de res sonorenses<br />
+              Carnes y cortes sonorenses<br />
               <em className="hero__title-em">seleccionados</em> para tu asador
             </h1>
             <p className="hero__lead">
-              Tradición de 22 años, frescura diaria y servicio de oficio.
+              Tradición de 20 años, frescura diaria y servicio de oficio.
               Compras tu carne y te la <strong>asamos gratis al momento</strong>.
             </p>
 
@@ -105,8 +81,8 @@ export default function Home() {
 
             <div className="hero__meta">
               <div className="hero__meta-item">
-                <strong>28+</strong>
-                <span>Cortes de Res & Vísceras</span>
+                <strong>16</strong>
+                <span>Productos en Catálogo</span>
               </div>
               <div className="hero__meta-divider" />
               <div className="hero__meta-item">
@@ -161,7 +137,7 @@ export default function Home() {
         <div className="container">
           <div className="section-head reveal">
             <span className="eyebrow">Selección de la Casa</span>
-            <h2>Cortes Estrella y Sonorenses</h2>
+            <h2>Favoritos para tu Carne Asada</h2>
             <p>
               Nuestros cortes más aclamados para la parrilla. Haz clic en cualquier corte para
               personalizar kilos, grosor y agregarlo a tu pedido.
@@ -207,7 +183,7 @@ export default function Home() {
 
           <div className="featured__cta reveal">
             <Link to="/cortes" className="btn btn--primary">
-              Ver el Catálogo Completo (28 Cortes)
+              Ver el Catálogo Completo (16 Productos)
               <Icon.ArrowRight />
             </Link>
           </div>
@@ -255,31 +231,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============== TESTIMONIALS ============== */}
-      <section className="testimonials section">
-        <div className="container">
-          <div className="section-head reveal">
-            <span className="eyebrow">Reseñas de Clientes</span>
-            <h2>Lo que dicen en San Luis Río Colorado</h2>
-          </div>
-          <div className="testimonials__grid">
-            {reviews.map((r, idx) => (
-              <div key={idx} className="testimonial-card reveal">
-                <div className="testimonial-card__stars">
-                  {[...Array(r.stars)].map((_, i) => (
-                    <Icon.Star key={i} size={16} />
-                  ))}
-                </div>
-                <p className="testimonial-card__text">"{r.text}"</p>
-                <div className="testimonial-card__author">
-                  <strong>{r.author}</strong>
-                  <span>{r.city} • {r.tag}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
     </>
   )
 }

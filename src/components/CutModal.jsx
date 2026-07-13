@@ -17,6 +17,9 @@ export default function CutModal({ cut, onClose }) {
 
   useEffect(() => {
     if (cut) {
+      setPrepOption(cut.canGrill === false ? 'fresco' : 'asado')
+      setThickness('1 pulgada')
+      setWeightKg('1.0')
       document.body.style.overflow = 'hidden'
     }
     return () => {
@@ -25,6 +28,9 @@ export default function CutModal({ cut, onClose }) {
   }, [cut])
 
   if (!cut) return null
+
+  const canGrill = cut.canGrill !== false
+  const allowThickness = cut.allowThickness !== false
 
   const parsedWeight = parseFloat(weightKg)
   const subtotalMXN = Math.round((isNaN(parsedWeight) ? 0 : parsedWeight) * (cut.pricePerKg || 0))
@@ -79,7 +85,7 @@ export default function CutModal({ cut, onClose }) {
       cutName: cut.name,
       weightKg: finalWeight,
       prepOption,
-      thickness,
+      thickness: allowThickness ? thickness : '',
       pricePerKg: cut.pricePerKg || 0,
       notes: notes.trim()
     })
@@ -126,7 +132,7 @@ export default function CutModal({ cut, onClose }) {
             <div className="spec-item">
               <Icon.MapPin size={16} />
               <div>
-                <strong>Ubicación:</strong>
+              <strong>Tipo / origen:</strong>
                 <span>{cut.location}</span>
               </div>
             </div>
@@ -175,19 +181,23 @@ export default function CutModal({ cut, onClose }) {
             <div className="form-group">
               <label>Servicio de preparación:</label>
               <div className="prep-options">
-                <button
-                  className={`prep-btn ${prepOption === 'asado' ? 'prep-btn--active' : ''}`}
-                  onClick={() => setPrepOption('asado')}
-                >
-                  <Icon.Flame size={16} />
-                  <span>Asado al momento (GRATIS)</span>
-                </button>
-                <button
-                  className={`prep-btn ${prepOption === 'marinado' ? 'prep-btn--active' : ''}`}
-                  onClick={() => setPrepOption('marinado')}
-                >
-                  <span>Marinado especial</span>
-                </button>
+                {canGrill && (
+                  <button
+                    className={`prep-btn ${prepOption === 'asado' ? 'prep-btn--active' : ''}`}
+                    onClick={() => setPrepOption('asado')}
+                  >
+                    <Icon.Flame size={16} />
+                    <span>Asado al momento (GRATIS)</span>
+                  </button>
+                )}
+                {cut.canMarinate !== false && (
+                  <button
+                    className={`prep-btn ${prepOption === 'marinado' ? 'prep-btn--active' : ''}`}
+                    onClick={() => setPrepOption('marinado')}
+                  >
+                    <span>Marinado especial</span>
+                  </button>
+                )}
                 <button
                   className={`prep-btn ${prepOption === 'fresco' ? 'prep-btn--active' : ''}`}
                   onClick={() => setPrepOption('fresco')}
@@ -199,7 +209,7 @@ export default function CutModal({ cut, onClose }) {
 
             {/* Weight selector */}
             <div className="form-row">
-              <div className="form-group">
+              {allowThickness && <div className="form-group">
                 <label>Cantidad (Kilos):</label>
                 <div className="weight-input-group">
                   <button onClick={() => handleWeightAdjust(-0.5)}>
@@ -221,7 +231,7 @@ export default function CutModal({ cut, onClose }) {
                     {errorFeedback}
                   </div>
                 )}
-              </div>
+              </div>}
 
               <div className="form-group">
                 <label>Grosor de corte:</label>

@@ -34,7 +34,7 @@ export default function Nosotros() {
             </div>
             <div className="story-content reveal delay-1">
               <span className="eyebrow eyebrow--gold">Desde San Luis Río Colorado</span>
-              <h2>22 Años Ofreciendo lo Mejor de Sonora</h2>
+              <h2>20 Años Ofreciendo lo Mejor de Sonora</h2>
               <p>
                 La Ponderosa 22 nació con una convicción clara: devolverle a la carnicería de barrio
                 la dignidad del oficio artesanal. Para nosotros, cortar carne no es una tarea en serie;
@@ -42,7 +42,7 @@ export default function Nosotros() {
               </p>
               <p>
                 Trabajamos de la mano con engordadores certificados del estado de Sonora. Recibimos
-                producto fresco a diario para garantizar que cada Cabrería, Diezmillo o Ribeye que
+                producto fresco a diario para garantizar que cada filete de cabrería, diezmillo o rib-eye que
                 llegas a poner en tus brasas sea una obra maestra.
               </p>
               

@@ -4,46 +4,32 @@ import './MeatAnatomyMap.css'
 
 const ANATOMY_ZONES = [
   {
-    id: 'nobles',
+    id: 'especiales',
     name: 'Lomo & Costillar',
-    tagline: 'Cortes Nobles & Tiernos',
-    cuts: ['Solomillo', 'Lomo (New York)', 'Chuletón Ribeye', 'T-Bone', 'Tomahawk', 'Cabrería'],
-    desc: 'Ubicado en la parte dorsal superior de la res. Son músculos con menor movimiento muscular, lo que los convierte en los cortes más suaves, marmoleados y cotizados.'
+    tagline: 'Suaves & Marmoleados',
+    cuts: ['Filete de Cabrería', 'Rib-Eye', 'Rib Fingers'],
+    desc: 'De esta zona provienen algunos de los productos más suaves y jugosos del catálogo, ideales para parrilla o brasa.'
   },
   {
-    id: 'sonorenses',
-    name: 'Zona Especial Sonorense',
-    tagline: 'Cortes Tradicionales del Norte',
-    cuts: ['Cabrería Sonorense', 'Diezmillo', 'Ribeye Cowboy', 'Aguja Norteña'],
-    desc: 'Selección exclusiva del norte de México. Mezcla perfecta de grasa infiltrada y hueso sazonador para cocción a la parrilla de leña o carbón.'
+    id: 'parrilla',
+    name: 'Paleta, Lomo & Pierna',
+    tagline: 'Favoritos para Asar',
+    cuts: ['Aguja para Asar', 'Diezmillo', 'Lomo Plano', 'Punta de Lomo', 'Palomilla Sirloin', 'Pulpa Paleta', 'Pulpa Bola'],
+    desc: 'Una selección de cortes versátiles y rendidores para bistec, tacos y la carne asada de todos los días.'
   },
   {
-    id: 'trasero',
-    name: 'Cuarto Trasero (Pierna & Cadera)',
-    tagline: 'Magros & Rendidores',
-    cuts: ['Cuarto Trasero', 'Babilla', 'Contra', 'Cadera', 'Peceto'],
-    desc: 'De la pierna y cadera de la res. Piezas magras de sabor definido, óptimas para medallones, bistec de diario, milanesa o rostizado entero.'
+    id: 'preparados',
+    name: 'Marinados & Preparados',
+    tagline: 'Listos para Cocinar',
+    cuts: ['Arrachera Marinada', 'Costilla Marinada', 'Tripa Cocida'],
+    desc: 'Productos preparados para ahorrar tiempo: sólo elige tu forma de cocción y disfruta.'
   },
   {
-    id: 'delantero',
-    name: 'Cuarto Delantero (Paleta & Pecho)',
-    tagline: 'Intenso Sabor & Barbacoa',
-    cuts: ['Espaldilla', 'Aguja', 'Paleta', 'Pescuezo', 'Pecho (Brisket)'],
-    desc: 'Zona de los hombros y pecho de la res. Excelente marmoleo y contenido de colágeno, ideales para guisados largos, birria, estofados y ahumados slow & low.'
-  },
-  {
-    id: 'coccion-lenta',
-    name: 'Zona de Cocción Lenta & Caldos',
-    tagline: 'Colágeno & Tuétano',
-    cuts: ['Chambarete con Tuétano', 'Morrón', 'Falda de Res', 'Costilla de Carga'],
-    desc: 'Cortes con hueso rico en tuétano y fibras largas. Al cocerse a fuego lento desprenden una gelatina natural que imparte una textura melosa a caldos y guisos.'
-  },
-  {
-    id: 'casqueria',
-    name: 'Casquería & Vísceras',
-    tagline: 'Tradición & Alta Delicatesen',
-    cuts: ['Mollejas', 'Lengua', 'Tripa de Leche', 'Rabo', 'Hígado', 'Corazón'],
-    desc: 'Cortes tradicionales de vísceras y órganos apreciados por sibaritas. Requieren oficio en su limpieza y cocción precisa para resaltar sus sabores únicos.'
+    id: 'complementos',
+    name: 'Pollo & Complementos',
+    tagline: 'Para Completar la Mesa',
+    cuts: ['Pechuga Natural', 'Queso Fresco Panela'],
+    desc: 'Opciones frescas para sumar variedad a la parrilla y acompañar tu comida.'
   }
 ]
 
@@ -60,9 +46,9 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
   return (
     <div className="anatomy-map">
       <div className="anatomy-map__header">
-        <span className="eyebrow eyebrow--gold">Explora el Animal</span>
-        <h2>Anatomía del Corte de Res</h2>
-        <p>Selecciona una zona anatómica para descubrir su origen, textura y cortes estrella.</p>
+        <span className="eyebrow eyebrow--gold">Explora el Catálogo</span>
+        <h2>Encuentra lo Ideal para tu Comida</h2>
+        <p>Selecciona un grupo para conocer los productos que tenemos disponibles.</p>
       </div>
 
       <div className="anatomy-map__content">
@@ -92,7 +78,7 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
         {/* Selected Zone Detail Card */}
         <div className="anatomy-map__card">
           <div className="anatomy-card__head">
-            <span className="anatomy-card__badge">Zona Seleccionada</span>
+            <span className="anatomy-card__badge">Grupo Seleccionado</span>
             <h3>{activeZone.name}</h3>
             <span className="anatomy-card__tagline">{activeZone.tagline}</span>
           </div>
@@ -100,7 +86,7 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
           <p className="anatomy-card__desc">{activeZone.desc}</p>
 
           <div className="anatomy-card__cuts-section">
-            <h4>Cortes principales de esta zona:</h4>
+            <h4>Productos de este grupo:</h4>
             <div className="anatomy-card__cuts-tags">
               {activeZone.cuts.map((c) => (
                 <span key={c} className="anatomy-cut-tag">
@@ -116,7 +102,7 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
               className="btn btn--primary anatomy-card__action"
               onClick={() => onSelectCategory(activeZone.id)}
             >
-              Ver cortes de {activeZone.name} en el catálogo
+              Ver {activeZone.name} en el catálogo
               <Icon.ArrowRight size={16} />
             </button>
           )}
