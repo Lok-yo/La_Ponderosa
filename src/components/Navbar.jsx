@@ -9,7 +9,7 @@ import './Navbar.css'
 
 const links = [
   { to: '/cortes', label: 'Cortes' },
-  { to: '/calculadora', label: 'Arma tu asado' },
+  { to: '/calculadora', label: 'Calculadora' },
   { to: '/nosotros', label: 'La casa' },
   { to: '/contacto', label: 'Visítanos' }
 ]

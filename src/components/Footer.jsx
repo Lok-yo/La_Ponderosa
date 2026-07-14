@@ -43,7 +43,7 @@ export default function Footer() {
             <h2 className="footer__title">Explora</h2>
             <ul className="footer__links">
               <li><Link to="/cortes">Cortes y precios</Link></li>
-              <li><Link to="/calculadora">Arma tu asado</Link></li>
+              <li><Link to="/calculadora">Calculadora</Link></li>
               <li><Link to="/nosotros">La casa</Link></li>
               <li><Link to="/contacto">Horarios y mapa</Link></li>
             </ul>
