@@ -222,8 +222,8 @@ export default function Home() {
             <span className="eyebrow">Que no falte. Que no sobre.</span>
             <h2>¿Cuántos vienen?</h2>
             <p>
-              Dinos cuántos adultos y niños se sientan a la mesa. Calculamos kilos, mezcla de cortes,
-              carbón y presupuesto; luego lo agregas completo a tu pedido.
+              Dinos cuántos adultos y niños se sientan a la mesa. Calculamos los kilos de carne,
+              los acompañamientos y el carbón sin decidir cortes por ti.
             </p>
             <Link to="/calculadora" className="btn btn--primary">
               Calcular mi carne asada
@@ -231,16 +231,23 @@ export default function Home() {
             </Link>
           </div>
           <div className="planner-callout__facts reveal delay-2">
-            <div><strong>3</strong><span>mezclas sugeridas</span></div>
-            <div><strong>1</strong><span>pedido listo</span></div>
-            <div><strong>0</strong><span>adivinanzas</span></div>
+            <div><strong>275</strong><span>g con guarniciones</span></div>
+            <div><strong>375</strong><span>g en asado moderado</span></div>
+            <div><strong>500</strong><span>g para buen diente</span></div>
           </div>
         </div>
       </section>
 
       <section className="visit-strip">
         <div className="container visit-strip__inner">
-          <div className="visit-strip__mark" aria-hidden="true">22</div>
+          <img
+            className="visit-strip__mark"
+            src="/brand/favicon-512.png"
+            width="512"
+            height="512"
+            alt=""
+            aria-hidden="true"
+          />
           <div>
             <span className="eyebrow">Aquí empieza la carne asada</span>
             <h2>Te esperamos en la 22.</h2>

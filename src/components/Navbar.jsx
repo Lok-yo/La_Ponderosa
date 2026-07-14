@@ -4,6 +4,7 @@ import { Icon } from './Icons'
 import { registerDialogLayer, useCart } from '../context/CartContext'
 import StoreStatusBadge from './StoreStatusBadge'
 import CurrencyToggle from './CurrencyToggle'
+import ThemeToggle from './ThemeToggle'
 import './Navbar.css'
 
 const links = [
@@ -61,13 +62,21 @@ export default function Navbar() {
     <nav className={`nav ${scrolled ? 'nav--scrolled' : ''}`} aria-label="Navegación principal">
       <div className="nav__inner container-wide">
         <Link to="/" className="nav__brand" aria-label="La Ponderosa 22, inicio">
-          <span className="nav__brand-mark" aria-hidden="true">
-            <strong>LP</strong>
-            <small>22</small>
-          </span>
-          <span className="nav__brand-text">
-            <span className="nav__brand-name">La Ponderosa</span>
-            <span className="nav__brand-sub">Carnicería · SLRC</span>
+          <span className="nav__brand-art" aria-hidden="true">
+            <img
+              className="nav__brand-logo"
+              src="/brand/la-ponderosa-logo.webp"
+              width="960"
+              height="610"
+              alt=""
+            />
+            <img
+              className="nav__brand-badge"
+              src="/brand/favicon-512.png"
+              width="512"
+              height="512"
+              alt=""
+            />
           </span>
         </Link>
 
@@ -94,6 +103,7 @@ export default function Navbar() {
 
         <div className="nav__actions">
           <CurrencyToggle />
+          <ThemeToggle />
 
           <button
             className="nav__cart-btn"

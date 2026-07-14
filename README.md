@@ -14,7 +14,7 @@ Sitio web de Carnicería La Ponderosa 22 en San Luis Río Colorado. La experienc
 
 - Catálogo con 16 productos, búsqueda y filtros por categoría y textura.
 - Personalizador de kilos, grosor, preparación y notas.
-- Calculadora para eventos con tres mezclas de cortes y presupuesto estimado.
+- Calculadora de cantidades por adultos, niños y tipo de carne asada.
 - Carrito persistente y pedido codificado correctamente para WhatsApp.
 - Conversión MXN/USD con tasa en caché y respaldo sin conexión.
 - Estado de la sucursal calculado en la zona horaria de Sonora.
