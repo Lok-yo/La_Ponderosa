@@ -24,13 +24,13 @@
 }
 
 .store-badge--open .store-badge__pulse {
-  color: rgba(39, 103, 73, 0.18);
+  color: color-mix(in srgb, var(--color-success) 18%, transparent);
   background: var(--color-success);
 }
 
 .store-badge--closed .store-badge__pulse {
-  color: rgba(197, 66, 33, 0.15);
-  background: var(--color-primary);
+  color: color-mix(in srgb, var(--color-primary-text) 18%, transparent);
+  background: var(--color-primary-text);
 }
 
 .store-badge__text strong {

@@ -1,4 +1,4 @@
-/* La Ponderosa 22 — Fuego de frontera */
+/* La Ponderosa 22 — identidad del mostrador */
 @font-face {
   font-family: 'Fraunces Variable';
   src: url('@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2') format('woff2-variations');
@@ -38,36 +38,76 @@
   --font-sans: 'Manrope Variable', 'Segoe UI', sans-serif;
   --font-serif: var(--font-display);
 
-  --color-bg-body: #f8f2e7;
-  --color-bg-surface: #fffaf1;
-  --color-bg-muted: #ede2cf;
-  --color-bg-elevated: #ffffff;
-  --color-paper: #fffaf1;
-  --color-cream: #f8f2e7;
+  --brand-black: #0b0908;
+  --brand-red: #920f17;
+  --brand-red-dark: #68080d;
+  --brand-cream: #fff39a;
+  --brand-wood: #a56e4e;
+  --brand-wood-dark: #71412f;
+
+  --color-bg-body: #f7efc6;
+  --color-bg-surface: #fff8d8;
+  --color-bg-muted: #ead9a5;
+  --color-bg-elevated: #fffdf1;
+  --color-paper: #fff8d8;
+  --color-cream: #f7efc6;
   --color-white: #ffffff;
 
-  --color-text-main: #17120f;
-  --color-text-body: #443a33;
-  --color-text-soft: #70645b;
-  --color-text-muted: #968a7f;
-  --color-dark: #17120f;
+  --color-text-main: #160f0c;
+  --color-text-body: #433027;
+  --color-text-soft: #6e5548;
+  --color-text-muted: #755e52;
+  --color-dark: var(--brand-black);
 
-  --color-primary: #c54221;
-  --color-primary-dark: #8f2d19;
-  --color-primary-soft: #e46a47;
-  --color-accent: #f2b84b;
-  --color-accent-dark: #d8992e;
+  --color-primary: var(--brand-red);
+  --color-primary-dark: var(--brand-red-dark);
+  --color-primary-soft: #ff817a;
+  --color-primary-text: #870d14;
+  --color-accent: var(--brand-cream);
+  --color-accent-dark: var(--brand-wood-dark);
   --color-success: #276749;
+  --color-success-bg: #276749;
+  --color-focus: var(--brand-red);
 
-  --color-border: rgba(23, 18, 15, 0.18);
-  --color-border-soft: rgba(23, 18, 15, 0.09);
-  --nav-bg: rgba(248, 242, 231, 0.94);
-  --nav-text: #17120f;
+  --color-border: rgba(22, 15, 12, 0.2);
+  --color-border-soft: rgba(22, 15, 12, 0.1);
+  --nav-bg: rgba(247, 239, 198, 0.94);
+  --nav-bg-solid: rgba(255, 248, 216, 0.98);
+  --nav-text: var(--color-text-main);
 
-  --shadow-sm: 0 8px 22px rgba(60, 36, 22, 0.08);
-  --shadow-md: 0 18px 50px rgba(60, 36, 22, 0.13);
-  --shadow-lg: 0 30px 80px rgba(28, 17, 11, 0.2);
+  --shadow-sm: 0 8px 22px rgba(71, 38, 25, 0.1);
+  --shadow-md: 0 18px 50px rgba(71, 38, 25, 0.16);
+  --shadow-lg: 0 30px 80px rgba(28, 17, 11, 0.24);
   --transition: 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg-body: #0b0908;
+  --color-bg-surface: #17110e;
+  --color-bg-muted: #241915;
+  --color-bg-elevated: #201713;
+  --color-paper: #17110e;
+  --color-cream: #0b0908;
+
+  --color-text-main: #fff5c9;
+  --color-text-body: #e9dcc2;
+  --color-text-soft: #c6b39d;
+  --color-text-muted: #ad9582;
+  --color-primary-text: #ff817a;
+  --color-accent-dark: var(--brand-cream);
+  --color-success: #69c99a;
+  --color-focus: var(--brand-cream);
+
+  --color-border: rgba(255, 243, 154, 0.22);
+  --color-border-soft: rgba(255, 243, 154, 0.1);
+  --nav-bg: rgba(11, 9, 8, 0.92);
+  --nav-bg-solid: rgba(17, 13, 11, 0.98);
+  --nav-text: var(--color-text-main);
+
+  --shadow-sm: 0 8px 22px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 18px 50px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.55);
 }
 
 html {
@@ -87,9 +127,10 @@ body {
   line-height: 1.65;
   color: var(--color-text-body);
   background:
-    radial-gradient(circle at 2% 18%, rgba(242, 184, 75, 0.12), transparent 24rem),
-    radial-gradient(circle at 96% 45%, rgba(197, 66, 33, 0.08), transparent 28rem),
+    radial-gradient(circle at 2% 18%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 24rem),
+    radial-gradient(circle at 96% 45%, color-mix(in srgb, var(--color-primary) 9%, transparent), transparent 28rem),
     var(--color-bg-body);
+  transition: color var(--transition), background-color var(--transition);
 }
 
 body::selection,
@@ -153,7 +194,7 @@ p {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-accent);
+  outline: 3px solid var(--color-focus);
   outline-offset: 4px;
 }
 
@@ -201,7 +242,7 @@ p {
   align-items: center;
   gap: 0.7rem;
   margin-bottom: 1.25rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 800;
@@ -264,7 +305,7 @@ p {
 .btn--primary {
   color: #fff;
   background: var(--color-primary);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-text);
   box-shadow: 5px 5px 0 var(--color-dark);
 }
 
@@ -295,7 +336,7 @@ p {
 }
 
 .btn--gold:hover {
-  background: #ffd067;
+  background: #fff6ad;
   box-shadow: 7px 7px 0 var(--color-dark);
 }
 
@@ -306,7 +347,7 @@ p {
   padding: clamp(4.5rem, 10vw, 8rem) 0 clamp(4rem, 8vw, 6rem);
   border-bottom: 1px solid var(--color-border);
   background:
-    linear-gradient(115deg, rgba(242, 184, 75, 0.22), transparent 38%),
+    linear-gradient(115deg, color-mix(in srgb, var(--color-accent) 22%, transparent), transparent 38%),
     var(--color-bg-muted);
 }
 
@@ -316,13 +357,33 @@ p {
   bottom: -0.25em;
   z-index: -1;
   content: '22';
-  color: rgba(197, 66, 33, 0.09);
+  color: color-mix(in srgb, var(--color-primary) 10%, transparent);
   font-family: var(--font-display);
   font-size: clamp(15rem, 32vw, 32rem);
   font-weight: 900;
   line-height: 0.75;
   letter-spacing: -0.12em;
   pointer-events: none;
+}
+
+.theme-toggle-btn {
+  width: 44px;
+  min-height: 44px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--color-text-main);
+  background: color-mix(in srgb, var(--color-bg-elevated) 76%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  transition: color var(--transition), background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.theme-toggle-btn:hover {
+  color: var(--color-primary-text);
+  background: var(--color-bg-elevated);
+  border-color: currentColor;
+  transform: rotate(-8deg);
 }
 
 .page-header__title {

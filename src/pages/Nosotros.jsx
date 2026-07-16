@@ -108,8 +108,8 @@ export default function Nosotros() {
       <section className="about-cta">
         <div className="container about-cta__inner reveal">
           <span>¿Ya sabes cuántos vienen?</span>
-          <h2>Arma el asado completo.</h2>
-          <p>La calculadora te recomienda kilos y una mezcla de cortes según tu reunión.</p>
+          <h2>Calcula la cantidad justa.</h2>
+          <p>La calculadora estima kilos según adultos, niños y el tipo de carne asada.</p>
           <Link to="/calculadora" className="btn btn--gold">
             Calcular mi pedido <Icon.Calculator size={18} />
           </Link>

@@ -18,7 +18,7 @@
   overflow: hidden;
   color: var(--color-text-body);
   background: var(--color-bg-body);
-  border: 1px solid var(--color-dark);
+  border: 1px solid var(--color-border);
   box-shadow: 12px 12px 0 var(--color-accent), var(--shadow-lg);
   animation: modalIn 360ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -105,7 +105,7 @@
 }
 
 .cut-modal__price {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   font-weight: 760;
@@ -130,8 +130,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   margin-top: 2rem;
-  background: var(--color-dark);
-  border: 1px solid var(--color-dark);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
 }
 
 .spec-item {
@@ -146,7 +146,7 @@
 .spec-item > svg {
   flex: 0 0 auto;
   margin-top: 0.2rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .spec-item strong,
@@ -206,7 +206,7 @@
 .cut-modal__divider {
   margin-block: 2.2rem;
   border: 0;
-  border-top: 1px solid var(--color-dark);
+  border-top: 1px solid var(--color-border);
 }
 
 .cut-modal__customizer h3 {
@@ -244,7 +244,7 @@
 .prep-btn--active {
   color: #fff;
   background: var(--color-primary);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-text);
 }
 
 .form-row {
@@ -265,7 +265,7 @@
   padding: 0 0.85rem;
   color: var(--color-text-main);
   background: var(--color-bg-surface);
-  border: 1px solid var(--color-dark);
+  border: 1px solid var(--color-border);
   border-radius: 0;
   font-size: 0.78rem;
 }
@@ -273,14 +273,14 @@
 .weight-input-group {
   display: grid;
   grid-template-columns: 50px 1fr 50px;
-  border: 1px solid var(--color-dark);
+  border: 1px solid var(--color-border);
 }
 
 .weight-input-group input {
   min-width: 0;
   border-block: 0;
-  border-right: 1px solid var(--color-dark);
-  border-left: 1px solid var(--color-dark);
+  border-right: 1px solid var(--color-border);
+  border-left: 1px solid var(--color-border);
   text-align: center;
 }
 
@@ -288,7 +288,7 @@
   min-height: 50px;
   display: grid;
   place-items: center;
-  color: var(--color-dark);
+  color: var(--color-text-main);
   background: var(--color-bg-muted);
 }
 
@@ -305,8 +305,8 @@
   gap: 1rem;
   padding: 1rem clamp(1.25rem, 4vw, 2.5rem);
   background: var(--color-bg-surface);
-  border-top: 1px solid var(--color-dark);
-  box-shadow: 0 -10px 30px rgba(38, 23, 14, 0.08);
+  border-top: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .cut-modal__subtotal {
@@ -323,7 +323,7 @@
 }
 
 .cut-modal__subtotal strong {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-family: var(--font-display);
   font-size: 2rem;
   line-height: 1.1;
@@ -334,8 +334,8 @@
 }
 
 .btn--success {
-  background: var(--color-success) !important;
-  border-color: var(--color-success) !important;
+  background: var(--color-success-bg) !important;
+  border-color: var(--color-success-bg) !important;
 }
 
 @keyframes modalIn {

@@ -24,7 +24,7 @@ const routeMetadata = {
   },
   '/calculadora': {
     title: 'Calculadora de carne asada | La Ponderosa 22',
-    description: 'Calcula kilos, mezcla de cortes y presupuesto para tu reunión, y agrega la recomendación completa a tu pedido.'
+    description: 'Calcula cuántos kilos de carne necesitas según adultos, niños y el tipo de carne asada.'
   },
   '/nosotros': {
     title: 'La casa | La Ponderosa 22',

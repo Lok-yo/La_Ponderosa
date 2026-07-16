@@ -1,103 +1,120 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 const CurrencyContext = createContext()
 
+const EXCHANGE_API_URL = 'https://api.frankfurter.dev/v1/latest?base=MXN&symbols=USD'
 const CACHE_KEY = 'ponderosa_exchange_rate'
-const CACHE_DURATION = 1000 * 60 * 60 // 1 hour
+const CACHE_DURATION = 1000 * 60 * 60
+const REQUEST_TIMEOUT = 5_000
+const FALLBACK_MXN_TO_USD_RATE = 0.055
+
+function readCachedRate() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}')
+    const age = Date.now() - cached.timestamp
+
+    if (Number.isFinite(cached.rate) && cached.rate > 0 && age >= 0 && age < CACHE_DURATION) {
+      return { rate: cached.rate, timestamp: cached.timestamp }
+    }
+  } catch {
+    // An unavailable cache should never prevent conversion.
+  }
+
+  return null
+}
+
+function cacheRate(rate, timestamp) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ rate, timestamp }))
+  } catch {
+    // The live result remains usable even when localStorage is unavailable.
+  }
+}
+
+/**
+ * Async function #2: resolves the current MXN → USD rate through fetch Promises.
+ * It reads a one-hour cache first and returns a documented fallback when the
+ * service or connection is unavailable.
+ */
+async function getMxnToUsdRate() {
+  const cached = readCachedRate()
+  if (cached) return { ...cached, source: 'cache' }
+
+  const controller = new AbortController()
+  const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT)
+
+  try {
+    const response = await fetch(EXCHANGE_API_URL, { signal: controller.signal })
+    if (!response.ok) throw new Error(`Exchange API responded with ${response.status}`)
+
+    const data = await response.json()
+    const liveRate = Number(data?.rates?.USD)
+    if (!Number.isFinite(liveRate) || liveRate <= 0) {
+      throw new Error('Exchange API returned an invalid rate')
+    }
+
+    const timestamp = Date.now()
+    cacheRate(liveRate, timestamp)
+    return { rate: liveRate, timestamp, source: 'live' }
+  } catch (error) {
+    return {
+      rate: FALLBACK_MXN_TO_USD_RATE,
+      timestamp: null,
+      source: 'fallback',
+      error
+    }
+  } finally {
+    window.clearTimeout(timeout)
+  }
+}
 
 export function CurrencyProvider({ children }) {
-  const [currency, setCurrency] = useState('MXN') // 'MXN' | 'USD'
-  const [rate, setRate] = useState(null) // MXN → USD rate
+  const [currency, setCurrency] = useState('MXN')
+  const [rate, setRate] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
 
   const fetchExchangeRate = useCallback(async () => {
-    // Check cache first
-    try {
-      const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || '{}')
-      if (cached.rate && cached.timestamp && Date.now() - cached.timestamp < CACHE_DURATION) {
-        setRate(cached.rate)
-        setLastUpdated(new Date(cached.timestamp))
-        return
-      }
-    } catch {
-      // Cache miss, proceed to fetch
-    }
-
     setLoading(true)
     setError(null)
 
     try {
-      // frankfurter.app — 100% free, no API key, open source
-      const response = await fetch('https://api.frankfurter.app/latest?from=MXN&to=USD')
+      const result = await getMxnToUsdRate()
+      setRate(result.rate)
+      setLastUpdated(result.timestamp ? new Date(result.timestamp) : null)
 
-      if (!response.ok) {
-        throw new Error(`API respondió con status ${response.status}`)
+      if (result.source === 'fallback') {
+        setError('No se pudo actualizar la tasa; se muestra una conversión aproximada.')
+        console.error('Error fetching exchange rate:', result.error)
       }
-
-      const data = await response.json()
-      const mxnToUsd = data.rates.USD
-
-      setRate(mxnToUsd)
-      setLastUpdated(new Date())
-
-      // Cache the result
-      try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-          rate: mxnToUsd,
-          timestamp: Date.now()
-        }))
-      } catch {
-        // localStorage may be full, ignore
-      }
-    } catch (err) {
-      console.error('Error fetching exchange rate:', err)
-      setError(err.message)
-      // Fallback rate (approximate)
-      setRate(0.049)
-      setLastUpdated(null)
     } finally {
       setLoading(false)
     }
   }, [])
 
-  // Fetch only when the visitor actually asks to see USD prices.
+  // The API Promise runs only when the visitor requests USD prices.
   useEffect(() => {
     if (currency === 'USD' && !rate) fetchExchangeRate()
   }, [currency, rate, fetchExchangeRate])
 
   const toggleCurrency = () => {
-    setCurrency((prev) => (prev === 'MXN' ? 'USD' : 'MXN'))
+    setCurrency((previous) => (previous === 'MXN' ? 'USD' : 'MXN'))
   }
 
-  /**
-   * Formats a price in MXN to the current selected currency.
-   * @param {number} priceMXN - Price in Mexican Pesos
-   * @param {boolean} showSymbol - Whether to show $ symbol (default true)
-   * @returns {string} Formatted price string, e.g. "$360 MXN" or "$17.64 USD"
-   */
   const formatPrice = useCallback((priceMXN, showSymbol = true) => {
     if (currency === 'MXN') {
       const formatted = Math.round(priceMXN)
       return showSymbol ? `$${formatted} MXN` : `${formatted} MXN`
     }
 
-    // Convert to USD
-    const convertedRate = rate || 0.049 // Fallback
-    const usdPrice = (priceMXN * convertedRate).toFixed(2)
+    const usdPrice = (priceMXN * (rate || FALLBACK_MXN_TO_USD_RATE)).toFixed(2)
     return showSymbol ? `$${usdPrice} USD` : `${usdPrice} USD`
   }, [currency, rate])
 
-  /**
-   * Returns just the numeric value in the selected currency.
-   * @param {number} priceMXN
-   * @returns {number}
-   */
   const convertPrice = useCallback((priceMXN) => {
     if (currency === 'MXN') return Math.round(priceMXN)
-    const convertedRate = rate || 0.049
-    return Number((priceMXN * convertedRate).toFixed(2))
+    return Number((priceMXN * (rate || FALLBACK_MXN_TO_USD_RATE)).toFixed(2))
   }, [currency, rate])
 
   return (
@@ -122,8 +139,6 @@ export function CurrencyProvider({ children }) {
 
 export function useCurrency() {
   const context = useContext(CurrencyContext)
-  if (!context) {
-    throw new Error('useCurrency must be used within a CurrencyProvider')
-  }
+  if (!context) throw new Error('useCurrency must be used within a CurrencyProvider')
   return context
 }

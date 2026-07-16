@@ -10,11 +10,12 @@ export default function Footer() {
       <div className="container-wide">
         <div className="footer__masthead">
           <div className="footer__brand">
-            <span className="footer__brand-mark" aria-hidden="true">22</span>
-            <div>
-              <strong>La Ponderosa</strong>
-              <span>Carnicería · San Luis Río Colorado</span>
-            </div>
+            <img
+              src="/brand/la-ponderosa-logo.webp"
+              width="960"
+              height="610"
+              alt="Carnicería La Ponderosa 22"
+            />
           </div>
           <p>Carne de primera.<br /><em>El fuego va por la casa.</em></p>
         </div>
@@ -42,7 +43,7 @@ export default function Footer() {
             <h2 className="footer__title">Explora</h2>
             <ul className="footer__links">
               <li><Link to="/cortes">Cortes y precios</Link></li>
-              <li><Link to="/calculadora">Arma tu asado</Link></li>
+              <li><Link to="/calculadora">Calculadora</Link></li>
               <li><Link to="/nosotros">La casa</Link></li>
               <li><Link to="/contacto">Horarios y mapa</Link></li>
             </ul>

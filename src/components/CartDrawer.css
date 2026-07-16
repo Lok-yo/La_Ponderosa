@@ -16,7 +16,7 @@
   flex-direction: column;
   color: var(--color-text-body);
   background: var(--color-bg-body);
-  border-left: 1px solid var(--color-dark);
+  border-left: 1px solid var(--color-border);
   box-shadow: -18px 0 60px rgba(0, 0, 0, 0.24);
   animation: drawerIn 380ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -95,7 +95,7 @@
   position: relative;
   padding: 1.2rem;
   background: var(--color-bg-surface);
-  border: 1px solid var(--color-dark);
+  border: 1px solid var(--color-border);
   box-shadow: 4px 4px 0 var(--color-bg-muted);
 }
 
@@ -130,7 +130,7 @@
 .cart-item__remove:hover {
   color: #fff;
   background: var(--color-primary);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-text);
 }
 
 .cart-item__details {
@@ -150,9 +150,9 @@
 }
 
 .cart-item__prep-badge {
-  color: var(--color-primary);
-  background: rgba(197, 66, 33, 0.07);
-  border-color: rgba(197, 66, 33, 0.25);
+  color: var(--color-primary-text);
+  background: color-mix(in srgb, var(--color-primary-text) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary-text) 28%, transparent);
 }
 
 .cart-item__notes {
@@ -172,7 +172,7 @@
   display: grid;
   grid-template-columns: 44px minmax(70px, auto) 44px;
   align-items: center;
-  border: 1px solid var(--color-dark);
+  border: 1px solid var(--color-border);
 }
 
 .cart-item__weight-control button {
@@ -180,7 +180,7 @@
   height: 44px;
   display: grid;
   place-items: center;
-  color: var(--color-dark);
+  color: var(--color-text-main);
   background: var(--color-bg-muted);
 }
 
@@ -197,7 +197,7 @@
 }
 
 .cart-item__price {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-family: var(--font-display);
   font-size: 1.45rem;
   font-weight: 750;
@@ -216,7 +216,7 @@
 
 .cart-drawer__empty svg {
   margin-bottom: 1.2rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .cart-drawer__empty p {
@@ -237,8 +237,8 @@
   flex: 0 0 auto;
   padding: 1.15rem;
   background: var(--color-bg-surface);
-  border-top: 1px solid var(--color-dark);
-  box-shadow: 0 -12px 30px rgba(32, 20, 13, 0.08);
+  border-top: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
 }
 
 .cart-drawer__summary-row > span {
@@ -249,7 +249,7 @@
 }
 
 .cart-drawer__total {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-family: var(--font-display);
   font-size: 2rem;
 }

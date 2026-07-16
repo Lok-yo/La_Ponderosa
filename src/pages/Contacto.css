@@ -8,7 +8,7 @@
   align-items: stretch;
   gap: 1px;
   padding: 1px;
-  background: var(--color-dark);
+  background: var(--color-border);
 }
 
 .contact-card {
@@ -49,8 +49,8 @@
   height: 42px;
   display: grid;
   place-items: center;
-  color: var(--color-primary);
-  border: 1px solid var(--color-primary);
+  color: var(--color-primary-text);
+  border: 1px solid currentColor;
   border-radius: 50%;
 }
 
@@ -70,7 +70,7 @@
 }
 
 .contact-detail a {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-weight: 800;
 }
 
@@ -151,11 +151,11 @@
 }
 
 .faq-accordion {
-  border-top: 1px solid var(--color-dark);
+  border-top: 1px solid var(--color-border);
 }
 
 .faq-item {
-  border-bottom: 1px solid var(--color-dark);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .faq-item__question {
@@ -172,7 +172,7 @@
 }
 
 .faq-item__number {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   font-family: var(--font-display);
   font-size: 0.9rem;
   font-style: italic;
@@ -190,7 +190,7 @@
 }
 
 .faq-item--open .faq-icon {
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   transform: rotate(45deg);
 }
 

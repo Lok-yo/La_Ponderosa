@@ -86,7 +86,7 @@
   gap: 0.45rem;
   margin-top: 2rem;
   padding-bottom: 0.35rem;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
   border-bottom: 1px solid currentColor;
   font-size: 0.75rem;
   font-weight: 850;
@@ -114,8 +114,8 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--color-dark);
-  border: 1px solid var(--color-dark);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
 }
 
 .principle {
@@ -130,7 +130,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .principle__top span {
