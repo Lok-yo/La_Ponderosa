@@ -4,13 +4,11 @@ import Breadcrumbs from '../components/Breadcrumbs'
 import { Icon } from '../components/Icons'
 import { cuts, categories, getCutsByCategory } from '../data/cuts'
 import CutModal from '../components/CutModal'
-import { useCart } from '../context/CartContext'
 import { useReveal } from '../hooks/useReveal'
 import { useCurrency } from '../context/CurrencyContext'
 import './Cortes.css'
 
 export default function Cortes() {
-  const { addToCart } = useCart()
   const { formatPrice } = useCurrency()
   const location = useLocation()
   const [filter, setFilter] = useState(() => location.state?.categoryId || 'all')
@@ -54,12 +52,13 @@ export default function Cortes() {
       {/* Page header */}
       <header className="page-header">
         <div className="container-narrow">
-          <span className="eyebrow reveal">Catálogo del Mostrador</span>
-          <h1 className="page-header__title reveal">Carnes, Cortes & Complementos</h1>
+          <span className="eyebrow reveal">Precios y productos</span>
+          <h1 className="page-header__title reveal">¿Qué se va a armar?</h1>
           <p className="page-header__lead reveal">
-            Conoce los {totalCuts} productos disponibles en La Ponderosa 22.
-            Compara opciones, precios por kilo y elige tu preparación ideal.
+            Compara {totalCuts} opciones, elige kilos y grosor, y decide si te lo llevas fresco,
+            marinado o recién salido del asador.
           </p>
+          <p className="catalog-price-note reveal">Precios estimados por kilo · Confirmamos peso y disponibilidad por WhatsApp.</p>
         </div>
       </header>
 
@@ -72,6 +71,7 @@ export default function Cortes() {
               <button
                 className={`filter-chip ${filter === 'all' ? 'filter-chip--active' : ''}`}
                 onClick={() => setFilter('all')}
+                aria-pressed={filter === 'all'}
               >
                 Todos
                 <span className="filter-chip__count">{totalCuts}</span>
@@ -83,6 +83,7 @@ export default function Cortes() {
                     key={cat.id}
                     className={`filter-chip ${filter === cat.id ? 'filter-chip--active' : ''}`}
                     onClick={() => setFilter(cat.id)}
+                    aria-pressed={filter === cat.id}
                   >
                     {cat.short}
                     <span className="filter-chip__count">{count}</span>
@@ -100,6 +101,7 @@ export default function Cortes() {
                   placeholder="Buscar producto por nombre o tipo..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
+                  aria-label="Buscar producto"
                 />
               </div>
 
@@ -107,6 +109,7 @@ export default function Cortes() {
                 className="filter-bar__texture-select"
                 value={textureFilter}
                 onChange={(e) => setTextureFilter(e.target.value)}
+                aria-label="Filtrar por textura"
               >
                 <option value="all">Todas las texturas</option>
                 <option value="tierna">Muy tierna</option>
@@ -119,7 +122,7 @@ export default function Cortes() {
       </section>
 
       {/* Results count summary */}
-      <div className="filter-summary">
+      <div className="filter-summary" aria-live="polite">
         <div className="container">
           <p>
             {filtered.length === totalCuts
@@ -156,11 +159,11 @@ export default function Cortes() {
                   <article
                     key={cut.id}
                     className={`cut-card reveal delay-${(idx % 3) + 1}`}
-                    onClick={() => setSelectedCutForModal(cut)}
                   >
                     <div className="cut-card__head">
+                      <span className="cut-card__index">{String(idx + 1).padStart(2, '0')}</span>
                       <span className="cut-card__category">{cat?.short}</span>
-                      {cut.isRegional && <span className="cut-card__badge-sonora">Sonora</span>}
+                      {cut.isRegional && <span className="cut-card__badge-sonora">De la casa</span>}
                       <span className={`cut-card__texture cut-card__texture--${cut.texture}`}>
                         {cut.texture === 'tierna' && 'Muy tierna'}
                         {cut.texture === 'intermedia' && 'Semitierna'}
@@ -196,14 +199,13 @@ export default function Cortes() {
 
                     <div className="cut-card__foot-actions">
                       <button
+                        type="button"
                         className="cut-card__add-btn"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          setSelectedCutForModal(cut)
-                        }}
+                        onClick={() => setSelectedCutForModal(cut)}
+                        aria-label={`Ver y personalizar ${cut.name}, ${formatPrice(cut.pricePerKg || 280)} por kilo`}
                       >
-                        <Icon.ShoppingBag size={14} />
-                        Pedir
+                        Personalizar
+                        <Icon.ArrowRight size={14} />
                       </button>
                     </div>
                   </article>
@@ -218,11 +220,11 @@ export default function Cortes() {
       <section className="cuts-cta section">
         <div className="container-narrow">
           <div className="cuts-cta__inner reveal">
-            <span className="eyebrow eyebrow--gold">¿Tienes dudas sobre algún corte?</span>
-            <h2>Servicio personal en mostrador y asador</h2>
+            <span className="eyebrow eyebrow--gold">¿No sabes cuál llevar?</span>
+            <h2>Cuéntanos el plan. Nosotros te recomendamos.</h2>
             <p>
-              Te asesoramos en tiempo real por WhatsApp o por llamada directa. Recuerda que te asamos
-              tu pedido completamente sin costo extra.
+              Te ayudamos a elegir por presupuesto, número de personas y tipo de cocción. También puedes
+              pedir tu compra asada al momento sin costo extra.
             </p>
             <div className="cuts-cta__buttons">
               <a

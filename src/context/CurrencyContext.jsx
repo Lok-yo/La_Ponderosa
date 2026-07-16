@@ -62,10 +62,10 @@ export function CurrencyProvider({ children }) {
     }
   }, [])
 
-  // Fetch rate on mount
+  // Fetch only when the visitor actually asks to see USD prices.
   useEffect(() => {
-    fetchExchangeRate()
-  }, [fetchExchangeRate])
+    if (currency === 'USD' && !rate) fetchExchangeRate()
+  }, [currency, rate, fetchExchangeRate])
 
   const toggleCurrency = () => {
     setCurrency((prev) => (prev === 'MXN' ? 'USD' : 'MXN'))

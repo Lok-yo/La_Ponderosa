@@ -1,126 +1,70 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from './Icons'
 import './StoreStatusBadge.css'
 
-const TIME_API_URL = 'https://worldtimeapi.org/api/timezone/America/Hermosillo'
+const OPEN_MINUTES = 10 * 60
 
-/**
- * Horarios de cierre por día:
- *  - Martes (2): cierra a las 4:00 PM
- *  - Domingos (0): cierra a las 6:00 PM
- *  - Resto: cierra a las 7:00 PM
- */
-function getCloseHour(dayOfWeek) {
-  if (dayOfWeek === 2) return 16  // Martes → 4 PM
-  if (dayOfWeek === 0) return 18  // Domingo → 6 PM
-  return 19                        // Lunes, Mié–Sáb → 7 PM
+function getCloseMinutes(dayOfWeek) {
+  if (dayOfWeek === 2) return 16 * 60
+  if (dayOfWeek === 0) return 18 * 60
+  return 19 * 60
 }
 
-/**
- * Fetches the real current time from WorldTimeAPI for America/Hermosillo.
- * Returns { hour, dayOfWeek } or throws on failure.
- */
-async function fetchHermosilloTime() {
-  const response = await fetch(TIME_API_URL)
-  if (!response.ok) {
-    throw new Error(`WorldTimeAPI responded with ${response.status}`)
-  }
-  const data = await response.json()
-  // data.datetime example: "2026-07-09T17:45:12.345678-07:00"
-  const dt = new Date(data.datetime)
-  return { hour: dt.getHours(), dayOfWeek: dt.getDay() }
-}
+function getHermosilloClock() {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/Hermosillo',
+    weekday: 'long',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23'
+  }).formatToParts(new Date())
 
-/**
- * Fallback: calculates the hour using the browser's Intl API.
- */
-function getLocalHermosilloTime() {
-  const now = new Date()
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Hermosillo',
-    hour: 'numeric',
-    hour12: false,
-    weekday: 'short'
-  })
-  // Get hour separately
-  const hourFormatter = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Hermosillo',
-    hour: 'numeric',
-    hour12: false
-  })
-  const hour = parseInt(hourFormatter.format(now), 10)
-  // Get day-of-week from a date adjusted to Hermosillo
-  const dayStr = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Hermosillo',
-    weekday: 'long'
-  }).format(now)
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]))
   const dayMap = { Sunday: 0, Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6 }
-  const dayOfWeek = dayMap[dayStr] ?? now.getDay()
-  return { hour, dayOfWeek }
+
+  return {
+    day: dayMap[values.weekday] ?? 1,
+    minutes: Number(values.hour) * 60 + Number(values.minute)
+  }
+}
+
+function readStatus() {
+  const { day, minutes } = getHermosilloClock()
+  const closeMinutes = getCloseMinutes(day)
+  const isOpen = minutes >= OPEN_MINUTES && minutes < closeMinutes
+  const closeHour = closeMinutes / 60
+
+  return {
+    isOpen,
+    detail: isOpen
+      ? `hasta ${closeHour > 12 ? closeHour - 12 : closeHour}:00 ${closeHour >= 12 ? 'PM' : 'AM'}`
+      : minutes < OPEN_MINUTES
+        ? 'abre hoy · 10:00 AM'
+        : 'abre mañana · 10:00 AM'
+  }
 }
 
 export default function StoreStatusBadge() {
-  const [isOpen, setIsOpen] = useState(true)
-  const [nextChangeText, setNextChangeText] = useState('')
-  const [source, setSource] = useState('local') // 'api' | 'local'
-  const [loading, setLoading] = useState(true)
-
-  const updateStatus = useCallback((hour, dayOfWeek, sourceLabel) => {
-    const closeHour = getCloseHour(dayOfWeek)
-    if (hour >= 10 && hour < closeHour) {
-      setIsOpen(true)
-      const remaining = closeHour - hour
-      const closeLabel = closeHour === 16 ? '4:00 PM' : closeHour === 18 ? '6:00 PM' : '7:00 PM'
-      setNextChangeText(`Cierra a las ${closeLabel} (en ~${remaining}h)`)
-    } else {
-      setIsOpen(false)
-      setNextChangeText('Abre a las 10:00 AM')
-    }
-    setSource(sourceLabel)
-  }, [])
-
-  const checkStatusAsync = useCallback(async () => {
-    try {
-      const { hour, dayOfWeek } = await fetchHermosilloTime()
-      updateStatus(hour, dayOfWeek, 'api')
-    } catch (err) {
-      console.warn('WorldTimeAPI falló, usando hora local como respaldo:', err.message)
-      const { hour, dayOfWeek } = getLocalHermosilloTime()
-      updateStatus(hour, dayOfWeek, 'local')
-    } finally {
-      setLoading(false)
-    }
-  }, [updateStatus])
+  const [status, setStatus] = useState(readStatus)
 
   useEffect(() => {
-    // Initial async fetch
-    checkStatusAsync()
-
-    // Re-check every 60 seconds — alternate between API and local fallback
-    const timer = setInterval(() => {
-      checkStatusAsync()
-    }, 60000)
-
-    return () => clearInterval(timer)
-  }, [checkStatusAsync])
+    const timer = window.setInterval(() => setStatus(readStatus()), 60_000)
+    return () => window.clearInterval(timer)
+  }, [])
 
   return (
     <div
-      className={`store-badge ${loading ? 'store-badge--loading' : isOpen ? 'store-badge--open' : 'store-badge--closed'}`}
-      title={source === 'api' ? 'Hora verificada con servidor externo' : 'Hora basada en tu dispositivo'}
+      className={`store-badge ${status.isOpen ? 'store-badge--open' : 'store-badge--closed'}`}
+      role="status"
+      aria-live="polite"
+      title="Horario de la sucursal en San Luis Río Colorado"
     >
-      <span className="store-badge__pulse" />
-      <Icon.Clock size={14} />
-      <div className="store-badge__text">
-        {loading ? (
-          <strong>Verificando horario…</strong>
-        ) : (
-          <>
-            <strong>{isOpen ? 'Abierto ahora' : 'Cerrado ahora'}</strong>
-            <span className="store-badge__sub">• {nextChangeText}</span>
-          </>
-        )}
-      </div>
+      <span className="store-badge__pulse" aria-hidden="true" />
+      <Icon.Clock size={13} aria-hidden="true" />
+      <span className="store-badge__text">
+        <strong>{status.isOpen ? 'Abierto' : 'Cerrado'}</strong>
+        <span> · {status.detail}</span>
+      </span>
     </div>
   )
 }

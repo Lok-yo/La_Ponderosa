@@ -38,22 +38,19 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
 
   const handleZoneClick = (zone) => {
     setActiveZone(zone)
-    if (onSelectCategory) {
-      onSelectCategory(zone.id)
-    }
   }
 
   return (
     <div className="anatomy-map">
       <div className="anatomy-map__header">
-        <span className="eyebrow eyebrow--gold">Explora el Catálogo</span>
-        <h2>Encuentra lo Ideal para tu Comida</h2>
-        <p>Selecciona un grupo para conocer los productos que tenemos disponibles.</p>
+        <span className="eyebrow eyebrow--gold">Elige por antojo</span>
+        <h2>¿Qué vas a cocinar?</h2>
+        <p>No necesitas saber de anatomía. Cuéntanos el plan y te llevamos al corte correcto.</p>
       </div>
 
       <div className="anatomy-map__content">
         {/* Interactive Zones Grid */}
-        <div className="anatomy-map__zones">
+        <div className="anatomy-map__zones" role="group" aria-label="Tipos de producto">
           {ANATOMY_ZONES.map((zone) => {
             const isActive = activeZone.id === zone.id
             return (
@@ -61,6 +58,9 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
                 key={zone.id}
                 className={`anatomy-zone-btn ${isActive ? 'anatomy-zone-btn--active' : ''}`}
                 onClick={() => handleZoneClick(zone)}
+                type="button"
+                aria-pressed={isActive}
+                aria-controls="category-detail"
               >
                 <div className="anatomy-zone-btn__icon">
                   <Icon.Flame size={18} />
@@ -76,9 +76,9 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
         </div>
 
         {/* Selected Zone Detail Card */}
-        <div className="anatomy-map__card">
+        <div className="anatomy-map__card" id="category-detail" aria-live="polite">
           <div className="anatomy-card__head">
-            <span className="anatomy-card__badge">Grupo Seleccionado</span>
+            <span className="anatomy-card__badge">Tu selección</span>
             <h3>{activeZone.name}</h3>
             <span className="anatomy-card__tagline">{activeZone.tagline}</span>
           </div>
@@ -99,6 +99,7 @@ export default function MeatAnatomyMap({ onSelectCategory }) {
 
           {onSelectCategory && (
             <button
+              type="button"
               className="btn btn--primary anatomy-card__action"
               onClick={() => onSelectCategory(activeZone.id)}
             >
